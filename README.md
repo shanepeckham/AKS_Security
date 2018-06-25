@@ -1,5 +1,7 @@
 # Deploying secure solutions on Azure Kubernetes Service
 
+Most Kubernetes security breaches are due to humar error, deploying with defaults, and not locking down components
+
 ## Key risks of an insecure Kubernetes cluster
 
 * Access to sensitive data
@@ -139,32 +141,31 @@ The following are the recommended admission controllers:
 * Validating AdmissionWebhook
 * ResourceQuota
 
-Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua, Twistlock) for scanning at the cluster level will protect against:
+**Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua, Twistlock) for scanning at the cluster level will protect against:**
 
-** Images running vulnerabilities
-** Images running malware
-** Images that embed secrets
-** Images that run as UID 0 (root privileges)
+* Images running vulnerabilities
+* Images running malware
+* Images that embed secrets
+* Images that run as UID 0 (root privileges)
 
-** Apply network segmentation, tools include:
-*** [Kube-router](https://www.kube-router.io/) - [ahmetb's has some examples here](https://github.com/ahmetb/kubernetes-network-policy-recipes) for examples 
-*** [Trireme](https://github.com/aporeto-inc/trireme-kubernetes)
+#### Apply network segmentation, tools include:
+* [Kube-router](https://www.kube-router.io/) - [ahmetb's has some examples here](https://github.com/ahmetb/kubernetes-network-policy-recipes) for examples 
+* [Cillium](https://cilium.io/)
+* [Trireme](https://github.com/aporeto-inc/trireme-kubernetes)
 
-** Apply service mesh and application routing
-*** [Twistlock cloud native firewall](https://www.twistlock.com/platform/cloud-native-firewall/)
-*** [Istio Service Mesh](https://istio.io/)
-*** [Linkerd Service Mesh](https://linkerd.io/)
-*** [Heptio Contour](https://heptio.com/products/#heptio-contour)
+#### Apply service mesh and application routing
+* [Twistlock cloud native firewall](https://www.twistlock.com/platform/cloud-native-firewall/)
+* [Istio Service Mesh](https://istio.io/)
+* [Linkerd Service Mesh](https://linkerd.io/)
+* [Heptio Contour](https://heptio.com/products/#heptio-contour)
 
-** Manage configuration
-*** [Heptio Sonobuoy](https://heptio.com/products/#heptio-sonobuoy)
+#### Manage configuration
+* [Heptio Sonobuoy](https://heptio.com/products/#heptio-sonobuoy)
 
-** Kubernetes conformance tests
-*** [Heptio Sonobuoy Scanner](https://scanner.heptio.com/)
-*** [kubesec.io](https://kubesec.io/)
-=== [Falco](https://sysdig.com/opensource/falco/)
-
-
+#### Kubernetes conformance tests
+* [Heptio Sonobuoy Scanner](https://scanner.heptio.com/)
+* [kubesec.io](https://kubesec.io/)
+* [Falco](https://sysdig.com/opensource/falco/)
 
 ### Azure level
 
@@ -177,20 +178,14 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 
 * Add scanning to pipeline build
 
-
-
 ### Auditing and Logging
 
-* Audit everything at the cluster level,  tools include:
-** [AKS containerlogging](https://docs.microsoft.com/en-us/azure/monitoring/monitoring-container-health)
-** [Fluentd](https://www.fluentd.org/)
-** [Grafana](https://grafana.com/)
-** [Kibana](https://www.elastic.co/products/kibana)
-** [Prometheus](https://prometheus.io/)
-
-
-Most security breaches were doing to humar error, deploying with defaults
-
+**Audit everything at the cluster level,  tools include:**
+* [AKS containerlogging](https://docs.microsoft.com/en-us/azure/monitoring/monitoring-container-health)
+* [Fluentd](https://www.fluentd.org/)
+* [Grafana](https://grafana.com/)
+* [Kibana](https://www.elastic.co/products/kibana)
+* [Prometheus](https://prometheus.io/)
 
 # Additional resource for security
 * Kube-Bench open source tool- CIS benchmark testing - https://github.com/aquasecurity/kube-bench . This will raise issues and remediations

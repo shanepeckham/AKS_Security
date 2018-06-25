@@ -110,7 +110,7 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 
 ### Node level
 
-#### Use admission controller to prvent intra-pod leakage, exposed secrets/ config maps etc:
+#### Use admission controller webhooks to prevent intra-pod leakage, exposed secrets/ config maps etc:
 
 * Limit the Node and Pod that a kubelet can modify
 * Enforce that kubelets must use credentials in system nodes
@@ -118,7 +118,7 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 
 ### Cluster level
 
-#### Admission Controllers
+#### Admission Controllers (Webhooks)
 
 * Operates at the API Server level
 * Intercepts request before it is persisted to etcd

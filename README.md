@@ -12,7 +12,7 @@
 
 • Authentication RBAC
 • Authorisation
-• Network Segmentation
+• Network Segmentation - tightly control all communication
 • Pod Security Policy
 • Encrypt Secrets
 • Auditing
@@ -21,10 +21,12 @@
 • Label everything for granular control
 • Apply networking segmentation at Level 4 (e.g. Kuberouter) and Level 7 (Istio, Linkerd)
 • A user should not be able to override Kubernetes security by crafting a YAML file if layered security controls have been successfully implemented
+• Create administrative boundaries between resources
+• Store secrets centrally, preferably in a secure valault such as Azure Key Vault
 
 ### Container Level 
 
-• Use a trusted registry so that only authorised images are depployed to the cluster
+• Use a trusted registry so that only authorised images are depployed to the cluster. Introduce a process to approve images for uploading to registry
 • Regularly apply security updates to cluster and container images (AKS will auto patch. Azure automatically applies security patches to the nodes in an AKS cluster on a nightly schedule
 
 •Scan container - solutions include:
@@ -70,12 +72,12 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 ••• Only those with correct credentials can pull pod
 ••• Can result in a crashloopbackoff if the credentials are not provided or incorrect
 
-• Use DenyEscalating Exec
+• Use DenyEscalatingExec
 •• If container has priviliged access, user this DenyEscalatingControl as mitigation as this will deny user trying to issue kubectl exec against the image and gain access to the node/cluster
 
 ### Namespace level
 
-• Apply a ResourceQuote admission controller to restrict resources such as :
+• By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as :
 •• CPU
 •• Memory
 •• Pods
@@ -85,15 +87,16 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 •• Secrets
 •• PersistentVolumeClaims
 
-By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against
-
 ### Node level
 
 • Use admission controller to prvent intra-pod leakage, exposed secrets/ config maps etc:
 •• Limit the Node and Pod that a kubelet can modify
 •• Enforce that kubelets must use credentials in system nodes
 
+• Limit SSH access to nodes - this is possible with AKS https://docs.microsoft.com/en-us/azure/aks/aks-ssh. Use kubectl exec instead if absolutely necessary - see DenyEscalating policy
+
 ### Cluster level
+
 • Admission Controllers
 •• Operates at the API Server level
 •• Intercepts request before it is persisted to etcd
@@ -129,13 +132,11 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 ••• Images that embed secrets
 ••• Images that run as UID 0 (root privileges)
 
-
-
 ### Azure level
 
 • Encrypt Storage (data at rest)
 • Apply regular updates- Azure automatically applies security patches to the nodes in your cluster on a nightly schedule
-
+• Apply NSGs for cross cluster communication
 
 ### CI/CD pipeline
 
@@ -148,6 +149,16 @@ Key risks:
 • Gain root access to Kubernetes worker nodes
 • Run workloads or access components outside the Kubernetes cluster
 • Deploying unvetted malicious images on to the cluster
+
+### Auditing and Logging
+
+• Audit everything at the cluster level
+• Tools include:
+•• AKS containerlogging https://docs.microsoft.com/en-us/azure/monitoring/monitoring-container-health
+•• Fluentd - https://www.fluentd.org/
+•• Grafana - https://grafana.com/
+•• Kibana - https://www.elastic.co/products/kibana
+•• Prometheus - https://prometheus.io/
 
 
 Most security breaches were doing to humar error, deploying with defaults

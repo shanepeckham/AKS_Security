@@ -1,3 +1,5 @@
+[alt text](http://www.thingx.cloud/wp-content/uploads/2018/04/kubernates_azure_thumb-1.png)
+
 # Deploying secure solutions on Azure Kubernetes Service
 
 Most Kubernetes security breaches are due to humar error, deploying with defaults, and not locking down components

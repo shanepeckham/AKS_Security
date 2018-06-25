@@ -5,6 +5,7 @@
 
 • Apply least privileged access
 • Segregation of responsibility
+• Integrate security into DevOps
 
 
 ## Kubernetes best practices
@@ -23,11 +24,14 @@
 
 ### Container Level 
 
-Scan container - solutions include:
-• Aqua, Twistlock
-• Avoid access to HOST PIC namespace - only if absolutely necessary
-• Avoid access toi Host PID namespace - only if absolutely necessary
-• A pod policy cannot necessarily protect against a container image that has privileged root access
+• Use a trusted registry so that only authorised images are depployed to the cluster
+• Regularly apply security updates to cluster and container images (AKS will auto patch. Azure automatically applies security patches to the nodes in an AKS cluster on a nightly schedule
+
+•Scan container - solutions include:
+•• Aqua, Twistlock
+•• Avoid access to HOST PIC namespace - only if absolutely necessary
+•• Avoid access toi Host PID namespace - only if absolutely necessary
+•• A pod policy cannot necessarily protect against a container image that has privileged root access
 
 •• Scan image with Aqua MicroScanner - https://github.com/aquasecurity/microscanner - can be run be developer on dev workstation prior to uploading to container registry
 Add the following to the Dockerfile
@@ -130,8 +134,12 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 ### Azure level
 
 • Encrypt Storage (data at rest)
+• Apply regular updates- Azure automatically applies security patches to the nodes in your cluster on a nightly schedule
 
 
+### CI/CD pipeline
+
+•• Add scanning to pipeline build
 
 Key risks:
 
@@ -149,6 +157,7 @@ Most security breaches were doing to humar error, deploying with defaults
 •• Kube-Bench open source tool- CIS benchmark testing - https://github.com/aquasecurity/kube-bench . This will raise issues and remediations
 •• Kube-Hunter - penetration testing tool to be run by the security team. Identify key security risks at the cluster level. In private beta and will be a free tool
 •• Aqua Microscanner - https://github.com/aquasecurity/microscanner to assess security of image at build time. Can be run on developer workstation prior to upload to regstry
+•• Using Kured, an open-source reboot daemon for Kubernetes. Kured runs as a DaemonSet and monitors each node for the presence of a file indicating that a reboot is required. It then orchestrates those reboots across the cluster, following the same cordon and drain process described earlier. - https://github.com/weaveworks/kured
 
 
 

@@ -3,9 +3,9 @@
 
 ## First Principles:
 
-• Apply least privileged access
-• Segregation of responsibility
-• Integrate security into DevOps
+* Apply least privileged access
+* Segregation of responsibility
+* Integrate security into DevOps
 
 
 ## Kubernetes best practices
@@ -38,8 +38,6 @@
 ** [Neuvector](https://neuvector.com/container-compliance-auditing-solutions/)
 
 
-
-
 * Avoid access to HOST PIC namespace - only if absolutely necessary
 * Avoid access toi Host PID namespace - only if absolutely necessary
 * A pod policy cannot necessarily protect against a container image that has privileged root access
@@ -55,7 +53,7 @@ ARG token
 RUN /microscanner ${token} && rm /microscanner
 ```
 
-• [Secure Docker](https://www.cisecurity.org/benchmark/docker/)
+* [Secure Docker](https://www.cisecurity.org/benchmark/docker/)
 
 ### Pod Level
 
@@ -124,9 +122,9 @@ Add security context, see:
 
 Any request that is rejected will fail and pass an error message to the user
 
-•• Developed out of tree and configured at runtime
-•• Facilitates dynamic action responses
-•• Should be within the same cluster
+** Developed out of tree and configured at runtime
+** Facilitates dynamic action responses
+** Should be within the same cluster
 
 Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS???
 
@@ -151,11 +149,11 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 *** [Kube-router](https://www.kube-router.io/) - [ahmetb's has some examples here](https://github.com/ahmetb/kubernetes-network-policy-recipes) for examples 
 *** [Trireme](https://github.com/aporeto-inc/trireme-kubernetes)
 
-•• Apply service mesh and application routing
-••• [Twistlock cloud native firewall](https://www.twistlock.com/platform/cloud-native-firewall/)
-••• [Istio Service Mesh](https://istio.io/)
-••• [Linkerd Service Mesh](https://linkerd.io/)
-••• [Heptio Contour](https://heptio.com/products/#heptio-contour)
+** Apply service mesh and application routing
+*** [Twistlock cloud native firewall](https://www.twistlock.com/platform/cloud-native-firewall/)
+*** [Istio Service Mesh](https://istio.io/)
+*** [Linkerd Service Mesh](https://linkerd.io/)
+*** [Heptio Contour](https://heptio.com/products/#heptio-contour)
 
 ** Manage configuration
 *** [Heptio Sonobuoy](https://heptio.com/products/#heptio-sonobuoy)
@@ -196,10 +194,10 @@ Most security breaches were doing to humar error, deploying with defaults
 
 
 # Additional resource for security
-•• Kube-Bench open source tool- CIS benchmark testing - https://github.com/aquasecurity/kube-bench . This will raise issues and remediations
-•• Kube-Hunter - penetration testing tool to be run by the security team. Identify key security risks at the cluster level. In private beta and will be a free tool
-•• Aqua Microscanner - https://github.com/aquasecurity/microscanner to assess security of image at build time. Can be run on developer workstation prior to upload to regstry
-•• Using Kured, an open-source reboot daemon for Kubernetes. Kured runs as a DaemonSet and monitors each node for the presence of a file indicating that a reboot is required. It then orchestrates those reboots across the cluster, following the same cordon and drain process described earlier. - https://github.com/weaveworks/kured
+* Kube-Bench open source tool- CIS benchmark testing - https://github.com/aquasecurity/kube-bench . This will raise issues and remediations
+* Kube-Hunter - penetration testing tool to be run by the security team. Identify key security risks at the cluster level. In private beta and will be a free tool
+* [Aqua Microscanner](https://github.com/aquasecurity/microscanner) to assess security of image at build time. Can be run on developer workstation prior to upload to regstry
+* Using Kured, an open-source reboot daemon for Kubernetes. Kured runs as a DaemonSet and monitors each node for the presence of a file indicating that a reboot is required. It then orchestrates those reboots across the cluster, following the same cordon and drain process described earlier. - https://github.com/weaveworks/kured
 
 
 

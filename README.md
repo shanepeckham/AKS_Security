@@ -1,12 +1,18 @@
-# AKS_Security
+# Deploying secure solutions on Azure Kubernetes Service
 
+## Key risks of an insecure Kubernetes cluster
+
+* Access to sensitive data
+* Ability to take over a Kubernetes cluster with elevated privileges
+* Gain root access to Kubernetes worker nodes
+* Run workloads or access components outside the Kubernetes cluster
+* Deploying unvetted malicious images on to the cluster
 
 ## First Principles:
 
 * Apply least privileged access
 * Segregation of responsibility
 * Integrate security into DevOps
-
 
 ## Kubernetes best practices
 
@@ -36,7 +42,6 @@
 ** [CoreOS Clair](https://github.com/coreos/clair)
 ** [OpenScap](https://www.open-scap.org/tools/)
 ** [Neuvector](https://neuvector.com/container-compliance-auditing-solutions/)
-
 
 * Avoid access to HOST PIC namespace - only if absolutely necessary
 * Avoid access toi Host PID namespace - only if absolutely necessary
@@ -176,13 +181,7 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 
 * Add scanning to pipeline build
 
-Key risks:
 
-* Access to sensitive data
-* Ability to take over a Kubernetes cluster with elevated privileges
-* Gain root access to Kubernetes worker nodes
-* Run workloads or access components outside the Kubernetes cluster
-* Deploying unvetted malicious images on to the cluster
 
 ### Auditing and Logging
 

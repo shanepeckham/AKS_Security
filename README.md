@@ -10,24 +10,24 @@
 
 ## Kubernetes best practices
 
-• Authentication RBAC
-• Authorisation
-• Network Segmentation - tightly control all communication
-• Pod Security Policy
-• Encrypt Secrets
-• Auditing
-• Admission Controllers
-• Layered security approach
-• Label everything for granular control
-• Apply networking segmentation at Level 4 (e.g. Kuberouter) and Level 7 (Istio, Linkerd)
-• A user should not be able to override Kubernetes security by crafting a YAML file if layered security controls have been successfully implemented
-• Create administrative boundaries between resources
-• Store secrets centrally, preferably in a secure valault such as Azure Key Vault
+* Authentication RBAC
+* Authorisation
+* Network Segmentation - tightly control all communication
+* Pod Security Policy
+* Encrypt Secrets
+* Auditing
+* Admission Controllers
+* Layered security approach
+* Label everything for granular control
+* Apply networking segmentation at Level 4 (e.g. Kuberouter) and Level 7 (Istio, Linkerd)
+* A user should not be able to override Kubernetes security by crafting a YAML file if layered security controls have been successfully implemented
+* Create administrative boundaries between resources
+* Store secrets centrally, preferably in a secure valault such as Azure Key Vault
 
 ### Container Level 
 
-• Use a trusted registry so that only authorised images are depployed to the cluster. Introduce a process to approve images for uploading to registry
-• Regularly apply security updates to cluster and container images (AKS will auto patch. Azure automatically applies security patches to the nodes in an AKS cluster on a nightly schedule
+* Use a trusted registry so that only authorised images are depployed to the cluster. Introduce a process to approve images for uploading to registry
+* Regularly apply security updates to cluster and container images (AKS will auto patch. Azure automatically applies security patches to the nodes in an AKS cluster on a nightly schedule
 
 •Scan container - solutions include:
 •• Aqua - www.aquasec.com Twistlock - https://www.twistlock.com/

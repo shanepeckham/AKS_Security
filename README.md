@@ -30,7 +30,8 @@
 * Regularly apply security updates to cluster and container images (AKS will auto patch. Azure automatically applies security patches to the nodes in an AKS cluster on a nightly schedule
 
 •Scan container - solutions include:
-•• Aqua - www.aquasec.com Twistlock - https://www.twistlock.com/
+•• [Aqua](www.aquasec.com)
+•• [Twistlock](https://www.twistlock.com/)
 •• Avoid access to HOST PIC namespace - only if absolutely necessary
 •• Avoid access toi Host PID namespace - only if absolutely necessary
 •• A pod policy cannot necessarily protect against a container image that has privileged root access
@@ -39,10 +40,12 @@
 
 Add the following to the Dockerfile
 
+```
 ADD https://get/aquasec.com/microscanner
 RUN chmod +x microscanner
 ARG token
 RUN /microscanner ${token} && rm /microscanner
+```
 
 • Secure Docker https://www.cisecurity.org/benchmark/docker/
 
@@ -59,40 +62,40 @@ RUN /microscanner ${token} && rm /microscanner
 ••• Apply Secomp/SELinux/App Armor profile
 ••• Can disable hostPath volumes
 
-• Restrict access to Host PID
+* Restrict access to Host PID
 • Avoid priviled pods
 Add security context, see:
 https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 https://kubernetes.io/docs/concepts/policy/pod-security-policy/
 https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 
-• Exposed credentials
-• Mount host with write access
-• Expose unnecessary ports
+* Exposed credentials
+* Mount host with write access
+* Expose unnecessary ports
 
-• Use AllwaysPullImages
+* Use AllwaysPullImages
 ••• Force registry authentication and can prevent other pods using the image
 ••• Only those with correct credentials can pull pod
 ••• Can result in a crashloopbackoff if the credentials are not provided or incorrect
 
-• Use DenyEscalatingExec
+* Use DenyEscalatingExec
 •• If container has priviliged access, user this DenyEscalatingControl as mitigation as this will deny user trying to issue kubectl exec against the image and gain access to the node/cluster
 
 ### Namespace level
 
-• By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as :
-•• CPU
-•• Memory
-•• Pods
-•• Services
-•• ReplicationControllers
-•• ResourceQuota
-•• Secrets
-•• PersistentVolumeClaims
+* By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as :
+** CPU
+** Memory
+** Pods
+** Services
+** ReplicationControllers
+** ResourceQuota
+** Secrets
+** PersistentVolumeClaims
 
 ### Node level
 
-• Use admission controller to prvent intra-pod leakage, exposed secrets/ config maps etc:
+* Use admission controller to prvent intra-pod leakage, exposed secrets/ config maps etc:
 •• Limit the Node and Pod that a kubelet can modify
 •• Enforce that kubelets must use credentials in system nodes
 

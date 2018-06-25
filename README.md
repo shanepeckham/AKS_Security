@@ -67,7 +67,7 @@ RUN /microscanner ${token} && rm /microscanner
 
 ### PodSecurityPolicies are only available if admission controllers have been implemented - dynamic admission controllers are available in 1.10
 
-PodSecurityPolicy can: (NEED RECIPES)
+**PodSecurityPolicy can: (NEED RECIPES)**
 
 * Avoid privilged containers from being run
 * Avoid containers that use the root namespaces from being run
@@ -87,16 +87,18 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Expose unnecessary ports
 
 #### Use AllwaysPullImages
+
 * Force registry authentication and can prevent other pods using the image
 * Only those with correct credentials can pull pod
 * Can result in a crashloopbackoff if the credentials are not provided or incorrect
 
 #### Use DenyEscalatingExec
+
 * If container has priviliged access, user this DenyEscalatingControl as mitigation as this will deny user trying to issue kubectl exec against the image and gain access to the node/cluster
 
 ### Namespace level
 
-By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as :
+**By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as:**
 * CPU
 * Memory
 * Pods
@@ -109,6 +111,7 @@ By applying a ResourceQuota, DoS attacks that target on malicious resource consu
 ### Node level
 
 #### Use admission controller to prvent intra-pod leakage, exposed secrets/ config maps etc:
+
 * Limit the Node and Pod that a kubelet can modify
 * Enforce that kubelets must use credentials in system nodes
 * Limit SSH access to nodes - this is possible with AKS https://docs.microsoft.com/en-us/azure/aks/aks-ssh. Use kubectl exec instead if absolutely necessary - see DenyEscalating policy
@@ -116,6 +119,7 @@ By applying a ResourceQuota, DoS attacks that target on malicious resource consu
 ### Cluster level
 
 #### Admission Controllers
+
 * Operates at the API Server level
 * Intercepts request before it is persisted to etcd
 * Occurrs after authentication
@@ -123,17 +127,19 @@ By applying a ResourceQuota, DoS attacks that target on malicious resource consu
 * Failure to configure the admission controller results in other functionality not being available
 
 **Two types of admission control**
+
 * Mutuating - can modify the request
 * Validation - can only validate, not modify
 
-Any request that is rejected will fail and pass an error message to the user. Admission controllers are:
+**Any request that is rejected will fail and pass an error message to the user. Admission controllers are:**
+
 * Developed out of tree and configured at runtime
 * Facilitates dynamic action responses
 * Should be within the same cluster
 
 Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS??? - TBD
 
-The following are the recommended admission controllers:
+**The following are the recommended admission controllers:**
 * NamespaceLifeCycle
 * LimitRanger
 * ServiceAccount
@@ -151,27 +157,34 @@ The following are the recommended admission controllers:
 * Images that run as UID 0 (root privileges)
 
 #### Apply network segmentation, tools include:
+
 * [Kube-router](https://www.kube-router.io/) - [ahmetb's has some examples here](https://github.com/ahmetb/kubernetes-network-policy-recipes) for examples 
 * [Cillium](https://cilium.io/)
 * [Trireme](https://github.com/aporeto-inc/trireme-kubernetes)
 
-#### Apply service mesh and application routing
-* [Twistlock cloud native firewall](https://www.twistlock.com/platform/cloud-native-firewall/)
+#### Apply service mesh and application routing with mutual TLS
+
 * [Istio Service Mesh](https://istio.io/)
 * [Linkerd Service Mesh](https://linkerd.io/)
 * [Heptio Contour](https://heptio.com/products/#heptio-contour)
+* [Twistlock cloud native firewall](https://www.twistlock.com/platform/cloud-native-firewall/)
 
 #### Manage configuration
+
 * [Heptio Sonobuoy](https://heptio.com/products/#heptio-sonobuoy)
 
 #### Kubernetes conformance tests
+
 * [Heptio Sonobuoy Scanner](https://scanner.heptio.com/)
 * [kubesec.io](https://kubesec.io/)
 * [Falco](https://sysdig.com/opensource/falco/)
 
 ### Azure level
 
+#### RBAC
 * Integrate AKS RABC with Azure Active Directory - https://docs.microsoft.com/en-us/azure/aks/aad-integration
+
+
 * Encrypt Storage [encrypt data at rest](https://docs.microsoft.com/en-us/azure/storage/common/storage-service-encryption)
 * Apply regular updates- Azure automatically applies security patches to the nodes in your cluster on a nightly schedule
 * Apply NSGs for cross cluster communication

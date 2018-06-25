@@ -30,23 +30,22 @@
 * Create administrative boundaries between resources
 * Store secrets centrally, preferably in a secure valault such as Azure Key Vault
 
-### Container Level 
+## Container Level 
 
 * Use a trusted registry so that only authorised images are depployed to the cluster. Introduce a process to approve images for uploading to registry
 * Regularly apply security updates to cluster and container images (AKS will auto patch. Azure automatically applies security patches to the nodes in an AKS cluster on a nightly schedule
-
-* Scan container - solutions include:
-** [Aqua](www.aquasec.com)
-** [Twistlock](https://www.twistlock.com/)
-** [Docker Bench for security](https://github.com/docker/docker-bench-security)
-** [CoreOS Clair](https://github.com/coreos/clair)
-** [OpenScap](https://www.open-scap.org/tools/)
-** [Neuvector](https://neuvector.com/container-compliance-auditing-solutions/)
-
 * Avoid access to HOST PIC namespace - only if absolutely necessary
 * Avoid access toi Host PID namespace - only if absolutely necessary
 * A pod policy cannot necessarily protect against a container image that has privileged root access
 
+### Scan container - solutions include:
+
+* [Aqua](www.aquasec.com)
+* [Twistlock](https://www.twistlock.com/)
+* [Docker Bench for security](https://github.com/docker/docker-bench-security)
+* [CoreOS Clair](https://github.com/coreos/clair)
+* [OpenScap](https://www.open-scap.org/tools/)
+* [Neuvector](https://neuvector.com/container-compliance-auditing-solutions/)
 * Scan image with Aqua MicroScanner - https://github.com/aquasecurity/microscanner - can be run be developer on dev workstation prior to uploading to container registry
 
 Add the following to the Dockerfile
@@ -60,78 +59,75 @@ RUN /microscanner ${token} && rm /microscanner
 
 * [Secure Docker](https://www.cisecurity.org/benchmark/docker/)
 
-### Pod Level
+## Pod Level
 
-* PodSecurityPolicies are only available if admission controllers have been implemented - dynamic admission controllers are available in 1.10
+### PodSecurityPolicies are only available if admission controllers have been implemented - dynamic admission controllers are available in 1.10
 
-** PodSecurityPolicy can: (NEED RECIPES)
-*** Avoid privilged containers from being run
-*** Avoid containers that use the root namespaces from being run
-*** Limit permissions on bvolume types that can be used
-*** Enforce read only access to root file system
-*** Ensure SELinux and AppArmor context
-*** Apply Secomp/SELinux/App Armor profile
-*** Can disable hostPath volumes
+PodSecurityPolicy can: (NEED RECIPES)
 
+* Avoid privilged containers from being run
+* Avoid containers that use the root namespaces from being run
+* Limit permissions on bvolume types that can be used
+* Enforce read only access to root file system
+* Ensure SELinux and AppArmor context
+* Apply Secomp/SELinux/App Armor profile
+* Can disable hostPath volumes
 * Restrict access to Host PID
-** Avoid priviled pods
+* Avoid priviled pods
 Add security context, see:
-*** https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-*** https://kubernetes.io/docs/concepts/policy/pod-security-policy/
-*** https://sysdig.com/blog/kubernetes-security-psp-network-policy/
-
+https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+https://kubernetes.io/docs/concepts/policy/pod-security-policy/
+https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Exposed credentials
 * Mount host with write access
 * Expose unnecessary ports
 
-* Use AllwaysPullImages
-** Force registry authentication and can prevent other pods using the image
-** Only those with correct credentials can pull pod
-** Can result in a crashloopbackoff if the credentials are not provided or incorrect
+#### Use AllwaysPullImages
+* Force registry authentication and can prevent other pods using the image
+* Only those with correct credentials can pull pod
+* Can result in a crashloopbackoff if the credentials are not provided or incorrect
 
-* Use DenyEscalatingExec
-** If container has priviliged access, user this DenyEscalatingControl as mitigation as this will deny user trying to issue kubectl exec against the image and gain access to the node/cluster
+#### Use DenyEscalatingExec
+* If container has priviliged access, user this DenyEscalatingControl as mitigation as this will deny user trying to issue kubectl exec against the image and gain access to the node/cluster
 
 ### Namespace level
 
-* By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as :
-** CPU
-** Memory
-** Pods
-** Services
-** ReplicationControllers
-** ResourceQuota
-** Secrets
-** PersistentVolumeClaims
+By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as :
+* CPU
+* Memory
+* Pods
+* Services
+* ReplicationControllers
+* ResourceQuota
+* Secrets
+* PersistentVolumeClaims
 
 ### Node level
 
-* Use admission controller to prvent intra-pod leakage, exposed secrets/ config maps etc:
-** Limit the Node and Pod that a kubelet can modify
-** Enforce that kubelets must use credentials in system nodes
-
+#### Use admission controller to prvent intra-pod leakage, exposed secrets/ config maps etc:
+* Limit the Node and Pod that a kubelet can modify
+* Enforce that kubelets must use credentials in system nodes
 * Limit SSH access to nodes - this is possible with AKS https://docs.microsoft.com/en-us/azure/aks/aks-ssh. Use kubectl exec instead if absolutely necessary - see DenyEscalating policy
 
 ### Cluster level
 
-* Admission Controllers
-** Operates at the API Server level
-** Intercepts request before it is persisted to etcd
-** Occurrs after authentication
-** Only cluster admin can configure an admission controller
-** Failure to configure the admission controller results in other functionality not being available
+#### Admission Controllers
+* Operates at the API Server level
+* Intercepts request before it is persisted to etcd
+* Occurrs after authentication
+* Only cluster admin can configure an admission controller
+* Failure to configure the admission controller results in other functionality not being available
 
-** Two types of admission control
-*** Mutuating - can modify the request
-*** Validation - can only validate, not modify
+**Two types of admission control**
+* Mutuating - can modify the request
+* Validation - can only validate, not modify
 
-Any request that is rejected will fail and pass an error message to the user
+Any request that is rejected will fail and pass an error message to the user. Admission controllers are:
+* Developed out of tree and configured at runtime
+* Facilitates dynamic action responses
+* Should be within the same cluster
 
-** Developed out of tree and configured at runtime
-** Facilitates dynamic action responses
-** Should be within the same cluster
-
-Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS???
+Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS??? - TBD
 
 The following are the recommended admission controllers:
 * NamespaceLifeCycle

@@ -30,18 +30,21 @@
 • Regularly apply security updates to cluster and container images (AKS will auto patch. Azure automatically applies security patches to the nodes in an AKS cluster on a nightly schedule
 
 •Scan container - solutions include:
-•• Aqua, Twistlock
+•• Aqua - www.aquasec.com Twistlock - https://www.twistlock.com/
 •• Avoid access to HOST PIC namespace - only if absolutely necessary
 •• Avoid access toi Host PID namespace - only if absolutely necessary
 •• A pod policy cannot necessarily protect against a container image that has privileged root access
 
 •• Scan image with Aqua MicroScanner - https://github.com/aquasecurity/microscanner - can be run be developer on dev workstation prior to uploading to container registry
+
 Add the following to the Dockerfile
 
 ADD https://get/aquasec.com/microscanner
 RUN chmod +x microscanner
 ARG token
 RUN /microscanner ${token} && rm /microscanner
+
+• Secure Docker https://www.cisecurity.org/benchmark/docker/
 
 ### Pod Level
 
@@ -131,6 +134,22 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 ••• Images running malware
 ••• Images that embed secrets
 ••• Images that run as UID 0 (root privileges)
+
+•• Apply network segmentation, tools include:
+••• Kube-router https://www.kube-router.io/
+
+•• Apply service mesh and application routing
+••• Twistlock cloud native firewall - https://www.twistlock.com/platform/cloud-native-firewall/
+••• Istio Service Mesh - https://istio.io/
+••• Linkerd Service Mesh - https://linkerd.io/
+••• Heptio Contour - https://heptio.com/products/#heptio-contour
+
+•• Manage configuration
+••• Heptio Sonobuoy - https://heptio.com/products/#heptio-sonobuoy
+
+•• Kubernetes conformance tests
+••• Heptio Sonobuoy Scanner - https://scanner.heptio.com/
+
 
 ### Azure level
 

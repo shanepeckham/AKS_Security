@@ -32,9 +32,17 @@
 * Scan container - solutions include:
 ** [Aqua](www.aquasec.com)
 ** [Twistlock](https://www.twistlock.com/)
-** Avoid access to HOST PIC namespace - only if absolutely necessary
-** Avoid access toi Host PID namespace - only if absolutely necessary
-** A pod policy cannot necessarily protect against a container image that has privileged root access
+** [Docker Bench for security](https://github.com/docker/docker-bench-security)
+** [CoreOS Clair](https://github.com/coreos/clair)
+** [OpenScap](https://www.open-scap.org/tools/)
+** [Neuvector](https://neuvector.com/container-compliance-auditing-solutions/)
+
+
+
+
+* Avoid access to HOST PIC namespace - only if absolutely necessary
+* Avoid access toi Host PID namespace - only if absolutely necessary
+* A pod policy cannot necessarily protect against a container image that has privileged root access
 
 * Scan image with Aqua MicroScanner - https://github.com/aquasecurity/microscanner - can be run be developer on dev workstation prior to uploading to container registry
 
@@ -139,8 +147,9 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 ** Images that embed secrets
 ** Images that run as UID 0 (root privileges)
 
-•• Apply network segmentation, tools include:
-••• Kube-router https://www.kube-router.io/
+** Apply network segmentation, tools include:
+*** [Kube-router](https://www.kube-router.io/) - [ahmetb's has some examples here](https://github.com/ahmetb/kubernetes-network-policy-recipes) for examples 
+*** [Trireme](https://github.com/aporeto-inc/trireme-kubernetes)
 
 •• Apply service mesh and application routing
 ••• [Twistlock cloud native firewall](https://www.twistlock.com/platform/cloud-native-firewall/)

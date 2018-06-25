@@ -167,6 +167,7 @@ Applying the ImagePolicyWebhopok allows an external service to be invoked (Aqua,
 
 ### Azure level
 
+* Integrate AKS RABC with Azure Active Directory - https://docs.microsoft.com/en-us/azure/aks/aad-integration
 * Encrypt Storage [encrypt data at rest](https://docs.microsoft.com/en-us/azure/storage/common/storage-service-encryption)
 * Apply regular updates- Azure automatically applies security patches to the nodes in your cluster on a nightly schedule
 * Apply NSGs for cross cluster communication

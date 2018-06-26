@@ -108,6 +108,8 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 
 ### Namespace level
 
+* Define allowed communication between namespaces using network policies
+
 **By applying a ResourceQuota, DoS attacks that target on malicious resource consumptio can be mitigated against. Apply a ResourceQuote admission controller to restrict resources such as:**
 * CPU
 * Memory

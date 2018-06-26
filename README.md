@@ -130,6 +130,11 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 
 ### Cluster level
 
+**RBAC for Kubelet flags**
+* ```--authorization-mode=RBAC,Node```
+* ```--admission-control=...,NodeRestriction```
+* Rotate certs  ```--rotate-certificates```
+
 #### Admission Controllers (Webhooks)
 
 * Operates at the API Server level

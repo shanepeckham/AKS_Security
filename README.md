@@ -17,6 +17,9 @@ Most Kubernetes security breaches are due to humar error, deploying with default
 * Apply least privileged access
 * Segregation of responsibility
 * Integrate security into DevOps
+* Trust your sources
+* Minimise attack surfaxce
+* Apply security in a layered approach
 
 ## Kubernetes best practices
 
@@ -41,6 +44,13 @@ Most Kubernetes security breaches are due to humar error, deploying with default
 * Avoid access to HOST PIC namespace - only if absolutely necessary
 * Avoid access toi Host PID namespace - only if absolutely necessary
 * A pod policy cannot necessarily protect against a container image that has privileged root access
+* Apply [AppArmor](https://kubernetes.io/docs/tutorials/clusters/apparmor/) security profile 
+* Apply [seccomp](https://docs.docker.com/engine/security/seccomp/)
+* Apply SELinux policy
+
+**Sandboxed containers - options include**
+* [Kata containers](https://katacontainers.io/)
+* [Gvisor containers](https://github.com/google/gvisor)
 
 ### Scan container - solutions include:
 
@@ -108,6 +118,8 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Secrets
 * PersistentVolumeClaims
 
+**Apply RBAC - this operates at the namespace level**
+
 ### Node level
 
 #### Use admission controller webhooks to prevent intra-pod leakage, exposed secrets/ config maps etc:
@@ -126,6 +138,8 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Only cluster admin can configure an admission controller
 * Failure to configure the admission controller results in other functionality not being available
 
+**DOES AKS RESTRICT ACCESS TO THE API SERVER TO THE NODE IPS ONLY?** GKE does this with the ```enable-master-authorised-networks``` flag
+
 **Two types of admission control**
 
 * Mutuating - can modify the request
@@ -137,7 +151,7 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Facilitates dynamic action responses
 * Should be within the same cluster
 
-Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS??? - TBD
+**Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS??? - TBD HOW CAN WE CHECK WE NEED DYNAMIC ADMISSION CONTROL WEBHOOKS** 
 
 **The following are the recommended admission controllers:**
 * NamespaceLifeCycle
@@ -158,6 +172,7 @@ Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS??? - TBD
 
 #### Apply network segmentation, tools include:
 
+* [Weave Net](https://kubernetes.io/docs/tasks/administer-cluster/network-policy-provider/weave-network-policy/)
 * [Kube-router](https://www.kube-router.io/) - [ahmetb's has some examples here](https://github.com/ahmetb/kubernetes-network-policy-recipes) for examples 
 * [Cillium](https://cilium.io/)
 * [Trireme](https://github.com/aporeto-inc/trireme-kubernetes)

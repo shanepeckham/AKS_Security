@@ -65,7 +65,7 @@ RUN /microscanner ${token} && rm /microscanner
 
 ## Pod Level
 
-### PodSecurityPolicies are only available if admission controllers have been implemented - dynamic admission controllers and initialisers are available in 1.10 - 
+### PodSecurityPolicies are only available if admission controllers have been implemented - dynamic admission controllers and initialisers (alpha) are available in 1.10 - 
 
 **PodSecurityPolicy can: (NEED RECIPES)**
 

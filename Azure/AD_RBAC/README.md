@@ -73,6 +73,40 @@ If you try to run ```kubectl get nodes ``` you will receive the following messag
 
 ```You must be logged in to the server (Unauthorized)```
 
+We can now grant the group to which the user belongs, namely DevOpsGroup, the permissions to read pods.
+
+Create the following role yaml in kubectl:
+
+```kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+  ```
+
+Now we can create a Rolebinding to assign the role to the group DevOpsGroup:
+
+```
+# This role binding allows members in group DevOpsGroup to read pods in the "default" namespace.
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: read-pods
+  namespace: default
+subjects:
+- kind: Group
+  name: "DevOpsGroup" # Name is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role #this must be Role or ClusterRole
+  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+```
+
 
 
 

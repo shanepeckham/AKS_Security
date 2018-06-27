@@ -27,10 +27,19 @@
 25. [WARN] 2.2.7 Ensure that the certificate authorities file permissions are set to 644 or more restrictive (Scored)
 26. [WARN] 2.2.8 Ensure that the client certificate authorities file ownership is set to root:root
 
-## Issue 2.1.1 Ensure that the --allow-privileged argument is set to false (Scored)
+## Issue 2.1.1 Ensure that the --allow-privileged argument is set to false
 
 If true, it allows containers to request privileged mode.
 
 **Mitigation**
 
-Apply 
+Apply Pod Security policies with RBAC and ClusterRoles. Ensure that containers are run with security contexts.
+
+
+## 2.1.5 Ensure that the --read-only-port argument is set to 0
+
+The read-only port for the Kubelet to serve on with no authentication/authorization (set to 0 to disable) (default 10255)
+
+Access to port 10255 to the Kubernetes API server is blocked by Azure networking. Furthermore, AKS can be deployed with the API server being fully private.
+
+

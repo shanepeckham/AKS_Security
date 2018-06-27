@@ -28,3 +28,9 @@
 26. [WARN] 2.2.8 Ensure that the client certificate authorities file ownership is set to root:root
 
 ## Issue 2.1.1 Ensure that the --allow-privileged argument is set to false (Scored)
+
+If true, it allows containers to request privileged mode.
+
+**Mitigation**
+
+Apply 

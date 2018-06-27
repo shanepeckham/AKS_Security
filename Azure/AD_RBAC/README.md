@@ -65,8 +65,13 @@ subjects:
 
 You will then be directed to an OAUTH permission request, see below:
 
+![Permissions](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180627_2.png)
 
+![Grant client AD application access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180627_3.png)
 
+If you try to run ```kubectl get nodes ``` you will receive the following message:
+
+```You must be logged in to the server (Unauthorized)```
 
 
 

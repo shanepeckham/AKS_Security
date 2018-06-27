@@ -107,6 +107,10 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ```
 
+Now if you run ```kubectl get pods``` you should see:
+
+```No resources found```
+
 
 
 

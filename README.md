@@ -62,7 +62,7 @@ Most Kubernetes security breaches are due to humar error, deploying with default
 * [Neuvector](https://neuvector.com/container-compliance-auditing-solutions/)
 * Scan image with Aqua MicroScanner - https://github.com/aquasecurity/microscanner - can be run be developer on dev workstation prior to uploading to container registry
 
-Add the following to the Dockerfile (get your token docker run --rm -it aquasec/microscanner --register <email address>)
+Add the following to the Dockerfile (get your token docker run --rm -it aquasec/microscanner --register [email address])
 
 ```
 ADD https://get.aquasec.com/microscanner /

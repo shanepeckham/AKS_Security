@@ -25,6 +25,10 @@ All Kubernetes clusters have two categories of users: service accounts managed b
 
 API requests are tied to either a normal user or a service account, or are treated as anonymous requests. This means every process inside or outside the cluster, from a human user typing kubectl on a workstation, to kubelets on nodes, to members of the control plane, must authenticate when making requests to the API server, or be treated as an anonymous user.
 
+## Best practise for RBAC with Azure Active Directory
+
+* Use AD groups user acccess, not individual kubernetes users (subjects) for single, central and simplified maintenance 
+* Use AD groups service access, not kubernetes service accounts for system access for single, central and simplified maintenance 
 
 
 ## Apply RBAC to Azure AD users and groups

@@ -119,6 +119,12 @@ You should see a friendly response:
 
 ![yes](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_4.png)
 
+```kubectl auth can-i create pods```
+
+Computer says no:
+
+![no](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_4.png)
+
 
 
 

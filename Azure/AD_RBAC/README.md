@@ -111,7 +111,14 @@ Now if you run ```kubectl get pods``` you should see:
 
 ```No resources found```
 
+To inspect what permissions you have you can issue the following command:
 
 ```kubectl auth can-i get pods```
+
+You should see a friendly response:
+
+
+
+
 
 

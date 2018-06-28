@@ -117,6 +117,8 @@ To inspect what permissions you have you can issue the following command:
 
 You should see a friendly response:
 
+![yes](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_4.png)
+
 
 
 

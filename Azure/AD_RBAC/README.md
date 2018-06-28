@@ -112,6 +112,6 @@ Now if you run ```kubectl get pods``` you should see:
 ```No resources found```
 
 
-
+```kubectl auth can-i get pods```
 
 

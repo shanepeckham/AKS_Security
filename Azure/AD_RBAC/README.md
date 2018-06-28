@@ -129,6 +129,44 @@ Computer says no:
 
 ![no](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_5.png)
 
+# Create full application flow
+
+* Control permissions by Azure Active Directory Group - DevOpsGroup
+* Members of this group can only view pods in the default namespace
+* Members of this group can create, view and exec into pods in the DevOpsGroup namespace
+
+**Create the namespace for devops**
+
+```kubectl create -f namespace-devops.yaml```
+
+**Roles in Kubernets are additive, you cannot deny so we start from the baseline permissions and work from there**
+
+**Create the role and rolebinding to get and list pods in namespace devops
+
+```kubectl create -f role-pod-list-podlogs-list.yaml```
+
+**As a member of devops run**
+
+```kubectl auth can-i get pods -n devops```
+
+**Create the role and rolebinding to create and exec pods in namespace devops
+
+```kubectl auth can-i create pods -n devops```
+
+**Now we want to create a deployment for a simple application - as a member of devops run**
+
+```kubectl auth can-i create deployments -n devops```
+
+As the admin assign the deployment role to the DevOpsGroup - role-deployment-create-watch-list.yaml
+
+Now create the deployment as a member of devops
+
+
+
+
+
+
+
 
 
 

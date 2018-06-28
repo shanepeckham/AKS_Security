@@ -123,7 +123,9 @@ You should see a friendly response:
 
 Computer says no:
 
-![no](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_4.png)
+![no](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_5.png)
+
+
 
 
 

@@ -161,6 +161,15 @@ As the admin assign the deployment role to the DevOpsGroup - role-deployment-cre
 
 Now create the deployment as a member of devops
 
+As the admin assign the service role to the DevOpsGroup - role-ervice-create-watch-list.yaml
+
+Now create the service as a member of devops
+
+**Now we can create a Pod Security Policy to control aspects of how containers are run**
+
+See [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#what-is-a-pod-security-policy) for more info
+
+Create the 
 
 
 

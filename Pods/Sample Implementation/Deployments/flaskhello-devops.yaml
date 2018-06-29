@@ -1,0 +1,22 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: flaskhello
+  namespace: devops
+spec:
+  selector:
+    matchLabels:
+      app: flaskhello
+  minReadySeconds: 10
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: flaskhello
+        version: v1
+    spec:      
+      containers:
+        - name: flaskhello
+          image: shanepeckham/flaskhello:v1
+          ports:
+          - containerPort: 5000

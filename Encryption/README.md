@@ -11,5 +11,8 @@ We will set up [Linkerd](https://linkerd.io) for encryption and routing control
 kubectl apply -f https://raw.githubusercontent.com/linkerd/linkerd-examples/master/k8s-daemonset/k8s/servicemesh.yml
 ```
 
+View the config map for ingress and routing
+
+```kubectl get cm l5d-config -n linkerd -o yaml```
 
 

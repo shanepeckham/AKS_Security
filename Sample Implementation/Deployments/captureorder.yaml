@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: captureorder
+  namespace: devops
+spec:
+  replicas: 3
+  selector:
+    app: captureorder
+  template:
+    metadata:
+      labels:
+        app: captureorder
+    spec:
+      dnsPolicy: ClusterFirst
+      containers:
+      - name: service
+        image: shanepeckham/captureorderack:v9
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name:  "MONGOHOST"
+          value: "mongodb://k8orders:QyzzuAhEuCybiGDxI1o0ai4myLE3No3cBQS15n72xBEXIGNBbNnCztmRLLz2FnNSPtJdQzUzumuqwdFY7FKr2w==@k8orders.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+        - name: "EVENTURL"
+          value: "https://coffee.servicebus.windows.net/orders"
+        - name: "EVENTPOLICYNAME"
+          value: "RootManageSharedAccessKey"
+        - name: "EVENTPOLICYKEY"
+          value: "2dXz/klqlCd2YLEaUp1D91p2q1bgaW9F/ZJSt39yT3I="
+        - name: "TEAMNAME"
+          value: "Tester"
+        - name: http
+          value: $(NODE_NAME):8080
+        - name: http_proxy
+          value: $(NODE_NAME):4140
+        ports:
+        - name: service
+          containerPort: 8080
+

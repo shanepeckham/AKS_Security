@@ -1,0 +1,24 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: api-allow-5000
+  namespace: devops
+spec:
+  podSelector:
+    matchLabels:
+      app: flaskhello
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 40.118.71.0/24
+  - ports:
+    - port: 5000
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 40.118.71.0/24
+    ports:
+    - port: 80

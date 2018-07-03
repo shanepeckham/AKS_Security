@@ -1,0 +1,206 @@
+# RBAC configs for linkerd
+---
+# grant linkerd/namerd permissions to enable service discovery
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: linkerd-endpoints-reader
+  namespace: devops
+rules:
+  - apiGroups: [""] # "" indicates the core API group
+    resources: ["endpoints", "services", "pods"] # pod access is required for the *-legacy.yml examples in this folder
+    verbs: ["get", "watch", "list"]
+  - apiGroups: [ "extensions" ]
+    resources: [ "ingresses" ]
+    verbs: ["get", "watch", "list"]
+---
+# grant namerd permissions to custom resource definitions in k8s 1.8+ and third party resources in k8s < 1.8 for dtab storage
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: namerd-dtab-storage
+  namespace: devops
+rules:
+  - apiGroups: ["l5d.io"]
+    resources: ["dtabs"]
+    verbs: ["get", "watch", "list", "update", "create"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: linkerd-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: devops
+roleRef:
+  kind: ClusterRole
+  name: linkerd-endpoints-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: namerd-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: devops
+roleRef:
+  kind: ClusterRole
+  name: namerd-dtab-storage
+  apiGroup: rbac.authorization.k8s.io
+
+# runs linkerd in a daemonset, in linker-to-linker mode
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: l5d-config
+  namespace: devops
+data:
+  config.yaml: |-
+    admin:
+      ip: 0.0.0.0
+      port: 9990
+
+    namers:
+    - kind: io.l5d.k8s
+      host: localhost
+      port: 8001
+
+    telemetry:
+    - kind: io.l5d.prometheus
+    - kind: io.l5d.recentRequests
+      sampleRate: 0.25
+
+    usage:
+      orgId: linkerd-examples-daemonset-ingress
+
+    routers:
+    - protocol: http
+      label: ingress
+      dtab: |
+        /srv                    => /#/io.l5d.k8s/default/http ;
+        /domain/world/hello/www => /srv/hello ;
+        /domain/world/hello/api => /srv/api ;
+        /domain/captureorder    => /srv/captureorder ;
+        /host                   => /$/io.buoyant.http.domainToPathPfx/domain ;
+        /svc                    => /host ;
+      interpreter:
+        kind: default
+        transformers:
+        - kind: io.l5d.k8s.daemonset
+          namespace: devops
+          port: incoming
+          service: l5d
+      servers:
+      - port: 4142
+        ip: 0.0.0.0
+
+    - protocol: http
+      label: outgoing
+      dtab: |
+        /srv        => /#/io.l5d.k8s/default/http ;
+        /host       => /srv ;
+        /host/world => /srv/world-v1 ;
+        /svc        => /host ;
+      interpreter:
+        kind: default
+        transformers:
+        - kind: io.l5d.k8s.daemonset
+          namespace: devops
+          port: incoming
+          service: l5d
+      servers:
+      - port: 4140
+        ip: 0.0.0.0
+      service:
+        responseClassifier:
+          kind: io.l5d.http.retryableRead5XX
+
+    - protocol: http
+      label: incoming
+      dtab: |
+        /srv                    => /#/io.l5d.k8s/default/http ;
+        /domain/world/hello/www => /srv/hello ;
+        /domain/world/hello/api => /srv/api ;
+        /domain/captureorder    => /srv/captureorder ;
+        /host                   => /$/io.buoyant.http.domainToPathPfx/domain ;
+        /host                   => /srv ;
+        /host/world             => /srv/world-v1 ;
+        /svc                    => /host ;
+      interpreter:
+        kind: default
+        transformers:
+        - kind: io.l5d.k8s.localnode
+      servers:
+      - port: 4141
+        ip: 0.0.0.0
+---
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    app: l5d
+  name: l5d
+  namespace: devops
+spec:
+  template:
+    metadata:
+      labels:
+        app: l5d
+    spec:
+      volumes:
+      - name: l5d-config
+        configMap:
+          name: "l5d-config"
+      containers:
+      - name: l5d
+        image: buoyantio/linkerd:1.3.6
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        args:
+        - /io.buoyant/linkerd/config/config.yaml
+        ports:
+        - name: outgoing
+          containerPort: 4140
+          hostPort: 4140
+        - name: incoming
+          containerPort: 4141
+        - name: ingress
+          containerPort: 4142
+        - name: admin
+          containerPort: 9990
+        volumeMounts:
+        - name: "l5d-config"
+          mountPath: "/io.buoyant/linkerd/config"
+          readOnly: true
+
+      - name: kubectl
+        image: buoyantio/kubectl:v1.8.5
+        args:
+        - "proxy"
+        - "-p"
+        - "8001"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: l5d
+  namespace: devops
+spec:
+  selector:
+    app: l5d
+  type: LoadBalancer
+  ports:
+  - name: ingress
+    port: 80
+    targetPort: 4142
+  - name: incoming
+    port: 4141
+  - name: admin
+    port: 9990

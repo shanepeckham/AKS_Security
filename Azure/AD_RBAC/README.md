@@ -2,10 +2,10 @@
 
 This document will provide some guidance on how to implement RBAC with Kubernetes with Azure Active Directory (AAD) in a secure fashion and adhering to a few security First Principles, namely:
 
-• Apply least privileged access
-• Segregation of responsibility
-• Minimise attack surface
-• Apply security in a layered approac
+* Apply least privileged access
+* Segregation of responsibility
+* Minimise attack surface
+* Apply security in a layered approac
 
 [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/)(AAD) helps you manage user identities and create intelligence-driven access policies to secure your resources. By managing Kubernetes users in AAD, maintenance is simplified as all users are managed centrally, and users have a single identity with which to access all services, not just Kubernetes. 
 

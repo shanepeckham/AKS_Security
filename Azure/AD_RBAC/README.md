@@ -54,10 +54,9 @@ We would then create an AAD Group that represents this minimum privilege and app
 
 Determining which Roles are required for operations within Kubernetes resources can be quite a time consuming task, and a typical approach to trace missing permissions is to enable the [Audit Policy](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) via an Admission Controller and then user Jordan Ligget's tool [audit2RBAC](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) to help quickly identify missing permissions. This is unfortunately not possible in AKS at the moment but can be used within [ACS-Engine](https://github.com/Azure/acs-engine).
 
+**The diagram below illustrates how we could map AAD Groups to a layered RBAC permissions approach**:
 
-
-
-
+![Layered](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180709_5.png)
 
 ## Enable RBAC on cluster with AD integration
 

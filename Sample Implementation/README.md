@@ -25,16 +25,36 @@ As the admin of the AD Directory create a new user:
 ### Get the users object id
 
 ```az ad user show --upn-or-object-id devopsbot@[yourdomain].onmicrosoft.com --query objectId
+```                   
+
+### Add ClusterRoles and ClusterRoleBindings to view pods and podlogs and assign to group K8Cluster-View
+
+```kubectl create -f https://raw.githubusercontent.com/shanepeckham/AKS_Security/master/Sample%20Implementation/Roles%20and%20RoleBindings/New/K8ClusterView.yaml
 ```
 
 ### Grant DevOpsBot cluster scoped list permissions by binding roles to the group
 ```az ad group member add --group K8Cluster-View
                        --member-id [objectId]                  
-```                       
+```   
+
+Now if user devopsbot issues the following command, it should be successful:
+
+```kubectl get pods -n devops```
+```kubectl get pods --all-namespaces```
+```kubectl auth can-i get pods```
+
+The last command should return 'yes'
+
+
+### Grant DevOpsBot namespace scoped list permissions by binding roles to the group (for create, update, watch pods)
+```az ad group member add --group K8DevOpsEdit
+                       --member-id [objectId]                  
+```   
 
 ### Add ClusterRoles and ClusterRoleBindings to view pods and podlogs and assign to group K8Cluster-View
 
-```kubectl
+```kubectl create -f https://raw.githubusercontent.com/shanepeckham/AKS_Security/master/Sample%20Implementation/Roles%20and%20RoleBindings/New/K8ClusterView.yaml
+```
 
 ### Create a new user DevopsBot2
 

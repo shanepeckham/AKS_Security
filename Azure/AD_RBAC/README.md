@@ -15,9 +15,6 @@ RBAC in Kubernetes may be thought of as the following:
 
 For example, can user devops view pods in namespace devops?
 
-
-
-
 ## To manage RBAC in Kubernetes, apart from resources and operations, we need the following elements:
 
 From [Bitnami](https://docs.bitnami.com/kubernetes/how-to/configure-rbac-in-your-kubernetes-cluster/)
@@ -33,18 +30,21 @@ You can find examples of each API element in the Kubernetes official documentati
 
 ## Users in Kubernetes from [Kubernetes docs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens)
 
-All Kubernetes clusters have two categories of users: service accounts managed by Kubernetes, and normal users.
+* All Kubernetes clusters have two categories of users: service accounts managed by Kubernetes, and normal users.
 
-* Normal users are assumed to be managed by an outside, independent service. An admin distributing private keys, a user store like Keystone or Google Accounts, even a file with a list of usernames and passwords. In this regard, Kubernetes does not have objects which represent normal user accounts. Regular users cannot be added to a cluster through an API call.
+* Normal users are assumed to be managed by an outside, independent service, in this case AAD. Kubernetes does not have objects which represent normal user accounts. Regular users cannot be added to a cluster through an API call.
 
 * In contrast, service accounts are users managed by the Kubernetes API. They are bound to specific namespaces, and created automatically by the API server or manually through API calls. Service accounts are tied to a set of credentials stored as Secrets, which are mounted into pods allowing in-cluster processes to talk to the Kubernetes API.
 
-API requests are tied to either a normal user or a service account, or are treated as anonymous requests. This means every process inside or outside the cluster, from a human user typing kubectl on a workstation, to kubelets on nodes, to members of the control plane, must authenticate when making requests to the API server, or be treated as an anonymous user.
 
-## Best practise for RBAC with Azure Active Directory
+## AAD Groups
 
-* Use AD groups user acccess, not individual kubernetes users (subjects) for single, central and simplified maintenance 
-* Use AD groups service access, not kubernetes service accounts for system access for single, central and simplified maintenance 
+* AAD Groups are containers that contain user and computer objects within them as members. We can use these groups to bind to Role and Cluster Role Bindings and then simply add users as members to Groups. 
+
+**The following diagram illustrates conceptually how AAD groups fit into RBAC with Kubernetes:
+
+
+
 
 
 ## Enable RBAC on cluster with AD integration

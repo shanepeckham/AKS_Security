@@ -31,7 +31,10 @@ As the admin of the AD Directory create a new user:
 ```az ad group member add --group K8Cluster-View
                        --member-id [objectId]                  
 ```                       
-                  
+
+### Add ClusterRoles and ClusterRoleBindings to view pods and podlogs and assign to group K8Cluster-View
+
+```kubectl
 
 ### Create a new user DevopsBot2
 

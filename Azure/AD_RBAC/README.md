@@ -9,6 +9,14 @@ This document will provide some guidance on how to implement RBAC with Kubernete
 
 [Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/)(AAD) helps you manage user identities and create intelligence-driven access policies to secure your resources. By managing Kubernetes users in AAD, maintenance is simplified as all users are managed centrally, and users have a single identity with which to access all services, not just Kubernetes. 
 
+RBAC in Kubernetes may be thought of as the following:
+
+![RBAC](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180709_3.png)
+
+For example, can user devops view pods in namespace devops?
+
+
+
 
 ## To manage RBAC in Kubernetes, apart from resources and operations, we need the following elements:
 

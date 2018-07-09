@@ -56,7 +56,7 @@ Determining which Roles are required for operations within Kubernetes resources 
 
 **The diagram below illustrates how we could map AAD Groups to a layered RBAC permissions approach**:
 
-![Layered](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180709_5.png)
+![Layered](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180709_6.png)
 
 ## Enable RBAC on cluster with AD integration
 

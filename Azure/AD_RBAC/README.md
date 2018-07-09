@@ -21,11 +21,10 @@ From [Bitnami](https://docs.bitnami.com/kubernetes/how-to/configure-rbac-in-your
 
 * Roles and ClusterRoles: Both consist of rules. The difference between a Role and a ClusterRole is the scope: in a Role, the rules are applicable to a single namespace, whereas a ClusterRole is cluster-wide, so the rules are applicable to more than one namespace. ClusterRoles can define rules for cluster-scoped resources (such as nodes) as well. Both Roles and ClusterRoles are mapped as API Resources inside our cluster.
 
-* Subjects: These correspond to the entity that attempts an operation in the cluster. There are three types of subjects:
-* User Accounts: These are global, and meant for humans or processes living outside the cluster. There is no associated resource API Object in the Kubernetes cluster.
-* Service Accounts: This kind of account is namespaced and meant for intra-cluster processes running inside pods, which want to authenticate against the API.
-* Groups: This is used for referring to multiple accounts. There are some groups created by default such as cluster-admin (explained in later sections).
-* RoleBindings and ClusterRoleBindings: Just as the names imply, these bind subjects to roles (i.e. the operations a given user can perform). As for Roles and ClusterRoles, the difference lies in the scope: a RoleBinding will make the rules effective inside a namespace, whereas a ClusterRoleBinding will make the rules effective in all namespaces.
+* **Subjects**: These correspond to the entity that attempts an operation in the cluster. There are three types of subjects:
+* **User Accounts**: These are global, and meant for humans or processes living outside the cluster. There is no associated resource API Object in the Kubernetes cluster.
+* **Service Accounts**: This kind of account is namespaced and meant for intra-cluster processes running inside pods, which want to authenticate against the API.
+* **RoleBindings and ClusterRoleBindings**: Just as the names imply, these bind subjects to roles (i.e. the operations a given user can perform). As for Roles and ClusterRoles, the difference lies in the scope: a RoleBinding will make the rules effective inside a namespace, whereas a ClusterRoleBinding will make the rules effective in all namespaces.
 You can find examples of each API element in the Kubernetes official documentation.
 
 ## Users in Kubernetes from [Kubernetes docs](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#openid-connect-tokens)
@@ -41,7 +40,7 @@ You can find examples of each API element in the Kubernetes official documentati
 
 * AAD Groups are containers that contain user and computer objects within them as members. We can use these groups to bind to Role and Cluster Role Bindings and then simply add users as members to Groups. 
 
-**The following diagram illustrates conceptually how AAD groups fit into RBAC with Kubernetes:
+**The following diagram illustrates conceptually how AAD groups fit into RBAC with Kubernetes:**
 
 ![Flow](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180709_4.png)
 
@@ -49,7 +48,15 @@ We map 1:M Roles to RoleBindings (or Cluster Roles and Cluster Role Bindings for
 
 ### Apply Least Priviliged Access
 
-We should always start from a position of applying the least permissions or priviliges to an account, thus in the context of Kubernetes for example, the minimum permissions would be the ability to view an object, such as Pods, for a single Namespace. This does not include watching or spooling logs, merely being able to list Pods and see their status.
+We should always start from a position of applying the least permissions or priviliges to an account, thus in the context of Kubernetes for example, the minimum permissions would be the ability to view an object, such as Pods, for a single Namespace. This does not include watching or spooling logs, merely being able to list Pods and see their status. 
+
+We would then create an AAD Group that represents this minimum privilege and appply a RoleBinding to this AAD Group. We then simply need to add all new users to this ADD Group until they need more privileges.
+
+Determining which Roles are required for operations within Kubernetes resources can be quite a time consuming task, and a typical approach to trace missing permissions is to enable the [Audit Policy](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) via an Admission Controller and then user Jordan Ligget's tool [audit2RBAC](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) to help quickly identify missing permissions. This is unfortunately not possible in AKS at the moment but can be used within [ACS-Engine](https://github.com/Azure/acs-engine).
+
+
+
+
 
 
 ## Enable RBAC on cluster with AD integration

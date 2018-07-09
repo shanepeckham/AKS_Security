@@ -1,6 +1,14 @@
-# Enable RBAC on cluster with AD integration
+# RBAC, Kubernetes and Azure Active Directory
 
-Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure/aks/aad-integration)
+This document will provide some guidance on how to implement RBAC with Kubernetes with Azure Active Directory (AAD) in a secure fashion and adhering to a few security First Principles, namely:
+
+• Apply least privileged access
+• Segregation of responsibility
+• Minimise attack surface
+• Apply security in a layered approac
+
+[Azure Active Directory](https://azure.microsoft.com/en-us/services/active-directory/)(AAD) helps you manage user identities and create intelligence-driven access policies to secure your resources. By managing Kubernetes users in AAD, maintenance is simplified as all users are managed centrally, and users have a single identity with which to access all services, not just Kubernetes. 
+
 
 ## To manage RBAC in Kubernetes, apart from resources and operations, we need the following elements:
 
@@ -30,6 +38,10 @@ API requests are tied to either a normal user or a service account, or are treat
 * Use AD groups user acccess, not individual kubernetes users (subjects) for single, central and simplified maintenance 
 * Use AD groups service access, not kubernetes service accounts for system access for single, central and simplified maintenance 
 
+
+## Enable RBAC on cluster with AD integration
+
+Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure/aks/aad-integration)
 
 ## Apply RBAC to Azure AD users and groups
 

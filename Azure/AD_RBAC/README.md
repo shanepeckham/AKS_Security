@@ -60,6 +60,12 @@ Determining which Roles are required for operations within Kubernetes resources 
 
 ![Layered](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_7.png)
 
+This is however a simplified approach as it does not implement restrictions on resources that may be accessed. Thus a more secure approach would be to introduce layers of resource restrictions on this model. Clearly a balance needs to be found between maintenance and control, thus it may make sense to aggregate typical resources that are required to deploy solutions on Kubernetes.
+
+In reality a user's access is defined by three components, that of Scope e.g. Cluster or Namespace, Resources e.g. Pods, Services and Verbs, e.g. Create, Exec, List, see below:
+
+
+
 ## Enable RBAC on cluster with AD integration
 
 Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure/aks/aad-integration)

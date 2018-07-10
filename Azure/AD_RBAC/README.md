@@ -64,34 +64,11 @@ Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure
 
 ## Apply RBAC to Azure AD users and groups
 
+### Log on to Kubernetes as the AAD admin
 
-Run ```az aks get-credentials --name devopsaksad --resource-group devopsakdsad ``` --admin
-
-**Creates a context called devopsaksad-admin**
-
-1. Create an Active Directory Group called Kubernetes-admin
-2. Create an Active Directory Group called DevOps
-3. Create the admingroupclusterrolebinding yaml:
-
+Run ```
+az aks get-credentials --name [clustername] --resource-group [resourcegroup] --admin
 ```
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
- name: group-cluster-admins
-roleRef:
- apiGroup: rbac.authorization.k8s.io
- kind: ClusterRole
- name: cluster-admin
-subjects:
-- apiGroup: rbac.authorization.k8s.io
-  kind: Group
-  name: "Kubernetes-admin"
-
-```
-
-4. Create a second user in active directory and do not assign to the group
-5. Ensure you had added the new user to the Azure subscription
-6. Login to az cli as that user
 7. You can issue the command 
 ```az aks get-credentials --name devopsaksad --resource-group devopsakdsad ```
 8. When you try to run a kubectl command you will be presented with the following:
@@ -110,95 +87,6 @@ If you try to run ```kubectl get nodes ``` you will receive the following messag
 
 We can now grant the group to which the user belongs, namely DevOpsGroup, the permissions to read pods.
 
-Create the following role yaml in kubectl:
-
-```kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  namespace: default
-  name: pod-reader
-rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
-  ```
-
-Now we can create a Rolebinding to assign the role to the group DevOpsGroup:
-
-```
-# This role binding allows members in group DevOpsGroup to read pods in the "default" namespace.
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: read-pods
-  namespace: default
-subjects:
-- kind: Group
-  name: "DevOpsGroup" # Name is case sensitive
-  apiGroup: rbac.authorization.k8s.io
-roleRef:
-  kind: Role #this must be Role or ClusterRole
-  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
-  apiGroup: rbac.authorization.k8s.io
-```
-
-Now if you run ```kubectl get pods``` you should see:
-
-```No resources found```
-
-To inspect what permissions you have you can issue the following command:
-
-```kubectl auth can-i get pods```
-
-You should see a friendly response:
-
-![yes](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_4.png)
-
-```kubectl auth can-i create pods```
-
-Computer says no:
-
-![no](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_5.png)
-
-# Create full application flow
-
-* Control permissions by Azure Active Directory Group - DevOpsGroup
-* Members of this group can only view pods in the default namespace
-* Members of this group can create, view and exec into pods in the DevOpsGroup namespace
-
-**Create the namespace for devops**
-
-```kubectl create -f namespace-devops.yaml```
-
-**Roles in Kubernets are additive, you cannot deny so we start from the baseline permissions and work from there**
-
-**Create the role and rolebinding to get and list pods in namespace devops
-
-```kubectl create -f role-pod-list-podlogs-list.yaml```
-
-**As a member of devops run**
-
-```kubectl auth can-i get pods -n devops```
-
-**Create the role and rolebinding to create and exec pods in namespace devops
-
-```kubectl auth can-i create pods -n devops```
-
-**Now we want to create a deployment for a simple application - as a member of devops run**
-
-```kubectl auth can-i create deployments -n devops```
-
-As the admin assign the deployment role to the DevOpsGroup - role-deployment-create-watch-list.yaml
-
-Now create the deployment as a member of devops
-
-As the admin assign the service role to the DevOpsGroup - role-ervice-create-watch-list.yaml
-
-Now create the service as a member of devops
-
-**Now we can create a Pod Security Policy to control aspects of how containers are run**
-
-See [Pod Security Policies](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#what-is-a-pod-security-policy) for more info
 
 Create the 
 

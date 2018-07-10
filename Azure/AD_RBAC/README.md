@@ -66,6 +66,10 @@ Thus a more secure approach would be to introduce layers of resource restriction
 
 **Thus it is viable to create many AAD Groups representing Resource, Scope and Verb permissions, but care should then be taken to ensure that the user is added to the least amount of AAD Groups to enable those permissions.**
 
+The following diagram illustrates adding only the necessary AAD Groups with permissions to the three users to achieve the required access:
+
+
+
 ## Enable RBAC on cluster with AD integration
 
 Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure/aks/aad-integration)
@@ -191,9 +195,55 @@ Create the cluster role for the to allow the granting of roles at the cluster le
 
 ### Service Accounts
 
+[Service Accounts](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/) can be used to run Pods and are native to Kubernetes and as such they cannot be managed within AAD. If no Service Account is specified when a Pod is run, default Service Account for that Namespace is used - note Service Accounts are scoped to a Namespace. 
+If there is a requirement to control Service Account Priviliges as granularly as with User Accounts, then the following approach can be considered. 
 
+As with mapping Roles and RoleBindings to an AAD Group, we can use the same mechanism and indeed YAML file to map to a Service Account. This means that although we are creating many Service Accounts, their permission profiles look exactly the same as the AAD Groups that we currently use, see below for an example:
+
+```
+# This role binding allows members in group DevOpsGroup to pod-list-podlogs-list in the "devops" namespace.
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ns1ViewAdmin
+  namespace: ns1
+subjects:
+- kind: Group
+  name: "ns1ViewAdmin" # Name is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: ns1ViewAdmin
+roleRef:
+  kind: Role #this must be Role or ClusterRole
+  name: ns1ViewAdmin # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
+```
 
 
 ### Aggregated Roles
 
+ClusterRoles can be created by combining other ClusterRoles using an aggregationRule. The permissions of aggregated ClusterRoles are controller-managed, and filled in by unioning the rules of any ClusterRole that matches the provided label selector. An example aggregated ClusterRole:
+```
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: monitoring
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      rbac.example.com/aggregate-to-monitoring: "true"
+rules: [] # Rules are automatically filled in by the controller manager.
+Creating a ClusterRole that matches the label selector will add rules to the aggregated ClusterRole. In this case rules can be added to the “monitoring” ClusterRole by creating another ClusterRole that has the label rbac.example.com/aggregate-to-monitoring: true.
 
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: monitoring-endpoints
+  labels:
+    rbac.example.com/aggregate-to-monitoring: "true"
+# These rules will be added to the "monitoring" role.
+rules:
+- apiGroups: [""]
+  resources: ["services", "endpoints", "pods"]
+  verbs: ["get", "list", "watch"]
+```

@@ -62,7 +62,7 @@ Determining which Roles are required for operations within Kubernetes resources 
 
 This is however a simplified approach as it does not implement restrictions on resources that may be accessed. In reality a user's access is defined by three components, that of Scope e.g. Cluster or Namespace, Resources e.g. Pods, Services and Verbs, e.g. Create, Exec, List, see below:
 
-![Access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_8.png)
+![Access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_8.png =250x250)
 
 Thus a more secure approach would be to introduce layers of resource restrictions on this model. Clearly a balance needs to be found between maintenance and control, thus it may make sense to aggregate typical resources that are required to deploy solutions on Kubernetes. We do not want to create too many AAD Groups, or rather we do not want users to be members of too many AAD Groups as these are reflected in the token and can increase login times.
 

@@ -107,7 +107,11 @@ And the following AD Groups:
 
 3. Create the Roles and Bindings
 
+Run the following command:
 
+```
+kubectl create -f https://github.com/shanepeckham/AKS_Security/tree/master/Sample%20Implementation/Roles%20and%20RoleBindings/
+```
  
 ### Log in as devopsbot
 

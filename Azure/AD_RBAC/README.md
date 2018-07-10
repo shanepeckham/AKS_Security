@@ -68,7 +68,11 @@ Thus a more secure approach would be to introduce layers of resource restriction
 
 The following diagram illustrates adding only the necessary AAD Groups with permissions to the three users to achieve the required access:
 
+[Minimal](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_9.png)
 
+Here we can see that user devops is only a member of AAD Group ClusterCreateAdmin, user devopsbot is a member of two groups ClusterViewOps and NS1CreateDev and devopsbot2 is a member of NS1CreateDev. 
+
+It is of course feasible to only bind cluster scoped roles to AAD Groups to really minimize the number of groups but there is of course a trade off of granular control.
 
 ## Enable RBAC on cluster with AD integration
 

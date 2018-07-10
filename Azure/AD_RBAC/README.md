@@ -103,10 +103,13 @@ And the following AD Groups:
 * NS1CreateDev
 * NS1CreateOps
 
+2. Add the users to your subscription
+
+3. Create the Roles and Bindings
 
 
-
-### Grant DevOpsBot cluster scoped list permissions by binding roles to the group
+ 
+### Log in as devopsbot
 
 As user devopsbot connect to AKS with kubectl
 
@@ -122,17 +125,13 @@ You will then be directed to an OAUTH permission request, see below:
 
 ![Grant client AD application access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180627_3.png)
 
-If you try to run ```kubectl get nodes ``` you will receive the following message:
+If you try to run ```kubectl get nodes -n devops``` you will receive the following message:
 
 ```
 You must be logged in to the server (Unauthorized)
 ```
 
-We can now grant the group to which the user belongs, namely DevOpsGroup, the permissions to read pods.
-
-```
-az ad group member add --group K8Cluster-View --member-id [objectId]                  
-```   
+**Now run the script RBACConfig1.sh
 
 Now if user devopsbot issues the following command, it should be successful:
 

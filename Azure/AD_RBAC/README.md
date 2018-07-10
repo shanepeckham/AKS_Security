@@ -110,7 +110,7 @@ And the following AD Groups:
 Run the following command:
 
 ```
-kubectl create -f https://github.com/shanepeckham/AKS_Security/tree/master/Sample%20Implementation/Roles%20and%20RoleBindings/
+kubectl create -f https://github.com/shanepeckham/AKS_Security/tree/master/Azure/AD_RBAC
 ```
  
 ### Log in as devopsbot

@@ -42,7 +42,7 @@ You can find examples of each API element in the Kubernetes official documentati
 
 **The following diagram illustrates conceptually how AAD groups fit into RBAC with Kubernetes:**
 
-![Flow](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180709_4.png)
+![Flow](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_11.png)
 
 We map 1:M Roles to RoleBindings (or Cluster Roles and Cluster Role Bindings for cluster wide scope), we bind 1:M RoleBindings to an AAD Group, and we associate 1:M Users with an AAD Group. In the case of ServiceAccounts which are managed exclusively within Kubernetes, we can associate these 1:1 with an AAD  Group, but we will cover this later.
 

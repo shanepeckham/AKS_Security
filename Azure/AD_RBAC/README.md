@@ -54,9 +54,11 @@ We would then create an AAD Group that represents this minimum privilege and app
 
 Determining which Roles are required for operations within Kubernetes resources can be quite a time consuming task, and a typical approach to trace missing permissions is to enable the [Audit Policy](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) via an Admission Controller and then user Jordan Ligget's tool [audit2RBAC](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) to help quickly identify missing permissions. This is unfortunately not possible in AKS at the moment but can be used within [ACS-Engine](https://github.com/Azure/acs-engine).
 
+### Implementing Least Priviliged Access
+
 **The diagram below illustrates how we could map AAD Groups to a layered RBAC permissions approach**:
 
-![Layered](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180709_6.png)
+![Layered](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_7.png)
 
 ## Enable RBAC on cluster with AD integration
 
@@ -66,7 +68,8 @@ Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure
 
 ### Log on to Kubernetes as the AAD admin
 
-Run ```
+Run 
+```
 az aks get-credentials --name [clustername] --resource-group [resourcegroup] --admin
 ```
 7. You can issue the command 
@@ -83,7 +86,9 @@ You will then be directed to an OAUTH permission request, see below:
 
 If you try to run ```kubectl get nodes ``` you will receive the following message:
 
-```You must be logged in to the server (Unauthorized)```
+```
+You must be logged in to the server (Unauthorized)
+```
 
 We can now grant the group to which the user belongs, namely DevOpsGroup, the permissions to read pods.
 
@@ -150,6 +155,7 @@ The last command should return 'yes'
 
 
 ### Grant DevOpsBot namespace scoped list permissions by binding roles to the group (for create, update, watch pods)
+
 ```
 az ad group member add --group K8DevOpsEdit --member-id [objectId]                  
 ```   
@@ -175,11 +181,11 @@ az ad user create --display-name devopsbot2 --password OpsBotDev2 --user-princip
 
 
 
+### Service Accounts
 
 
 
 
-
-
+### Aggregated Roles
 
 

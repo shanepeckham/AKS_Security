@@ -19,7 +19,7 @@ For example, can user devops view pods in namespace devops?
 
 From [Bitnami](https://docs.bitnami.com/kubernetes/how-to/configure-rbac-in-your-kubernetes-cluster/)
 
-* Roles and ClusterRoles: Both consist of rules. The difference between a Role and a ClusterRole is the scope: in a Role, the rules are applicable to a single namespace, whereas a ClusterRole is cluster-wide, so the rules are applicable to more than one namespace. ClusterRoles can define rules for cluster-scoped resources (such as nodes) as well. Both Roles and ClusterRoles are mapped as API Resources inside our cluster.
+* **Roles and ClusterRoles**: Both consist of rules. The difference between a Role and a ClusterRole is the scope: in a Role, the rules are applicable to a single namespace, whereas a ClusterRole is cluster-wide, so the rules are applicable to more than one namespace. ClusterRoles can define rules for cluster-scoped resources (such as nodes) as well. Both Roles and ClusterRoles are mapped as API Resources inside our cluster.
 
 * **Subjects**: These correspond to the entity that attempts an operation in the cluster. There are three types of subjects:
 * **User Accounts**: These are global, and meant for humans or processes living outside the cluster. There is no associated resource API Object in the Kubernetes cluster.
@@ -50,7 +50,7 @@ We map 1:M Roles to RoleBindings (or Cluster Roles and Cluster Role Bindings for
 
 We should always start from a position of applying the least permissions or priviliges to an account, thus in the context of Kubernetes for example, the minimum permissions would be the ability to view an object, such as Pods, for a single Namespace. This does not include watching or spooling logs, merely being able to list Pods and see their status. 
 
-We would then create an AAD Group that represents this minimum privilege and appply a RoleBinding to this AAD Group. We then simply need to add all new users to this ADD Group until they need more privileges.
+We would then create an AAD Group that represents this minimum privilege and apply a RoleBinding to this AAD Group. We then simply need to add all new users to this AAD Group until they need more privileges.
 
 Determining which Roles are required for operations within Kubernetes resources can be quite a time consuming task, and a typical approach to trace missing permissions is to enable the [Audit Policy](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) via an Admission Controller and then user Jordan Ligget's tool [audit2RBAC](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/) to help quickly identify missing permissions. This is unfortunately not possible in AKS at the moment but can be used within [ACS-Engine](https://github.com/Azure/acs-engine).
 

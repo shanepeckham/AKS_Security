@@ -44,7 +44,7 @@ You can find examples of each API element in the Kubernetes official documentati
 
 ![Flow](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_11.png)
 
-We map 1:M Roles to RoleBindings (or Cluster Roles and Cluster Role Bindings for cluster wide scope), we bind 1:M RoleBindings to an AAD Group, and we associate 1:M Users with an AAD Group. In the case of ServiceAccounts which are managed exclusively within Kubernetes, we can associate these 1:1 with an AAD  Group, but we will cover this later.
+We map 1:M Roles to RoleBindings (or Cluster Roles and Cluster Role Bindings for cluster wide scope), we bind 1:M RoleBindings to an AAD Group, and we associate 1:M Users with an AAD Group. In the case of ServiceAccounts which are managed exclusively within Kubernetes, we can associate these 1:1 indirectly with an AAD Group, but we will cover this later.
 
 ### Apply Least Priviliged Access
 
@@ -202,7 +202,7 @@ Create the cluster role for the to allow the granting of roles at the cluster le
 [Service Accounts](https://kubernetes.io/docs/reference/access-authn-authz/service-accounts-admin/) can be used to run Pods and are native to Kubernetes and as such they cannot be managed within AAD. If no Service Account is specified when a Pod is run, default Service Account for that Namespace is used - note Service Accounts are scoped to a Namespace. 
 If there is a requirement to control Service Account Priviliges as granularly as with User Accounts, then the following approach can be considered. 
 
-As with mapping Roles and RoleBindings to an AAD Group, we can use the same mechanism and indeed YAML file to map to a Service Account. This means that although we are creating many Service Accounts, their permission profiles look exactly the same as the AAD Groups that we currently use, see below for an example:
+As with mapping Roles and RoleBindings to an AAD Group, we can use the same mechanism and indeed YAML file to map to a Service Account. By doing this, we are in fact using a Service Account as an internal to Kubernetes representation of a Service Account. This means that although we are creating many Service Accounts, their permission profiles look exactly the same as the AAD Groups that we currently use, see below for an example:
 
 ```
 # This role binding allows members in group DevOpsGroup to pod-list-podlogs-list in the "devops" namespace.

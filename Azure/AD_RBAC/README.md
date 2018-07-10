@@ -64,7 +64,9 @@ This is however a simplified approach as it does not implement restrictions on r
 
 ![Access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_8.png)
 
-Thus a more secure approach would be to introduce layers of resource restrictions on this model. Clearly a balance needs to be found between maintenance and control, thus it may make sense to aggregate typical resources that are required to deploy solutions on Kubernetes. We do not want to create too many AAD Groups as these are reflected in the token and can increase login times.
+Thus a more secure approach would be to introduce layers of resource restrictions on this model. Clearly a balance needs to be found between maintenance and control, thus it may make sense to aggregate typical resources that are required to deploy solutions on Kubernetes. We do not want to create too many AAD Groups, or rather we do not want users to be members of too many AAD Groups as these are reflected in the token and can increase login times.
+
+Thus it is viable to create many AAD Groups representing Resource, Scope and Verb permissions, but care should then be taken to ensure that the user is added to the least amount of AAD Groups to enable those permissions.
 
 ## Enable RBAC on cluster with AD integration
 

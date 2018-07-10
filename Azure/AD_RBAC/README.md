@@ -68,7 +68,7 @@ Thus a more secure approach would be to introduce layers of resource restriction
 
 The following diagram illustrates adding only the necessary AAD Groups with permissions to the three users to achieve the required access:
 
-[Minimal](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_9.png)
+![Minimal](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_9.png)
 
 Here we can see that user devops is only a member of AAD Group ClusterCreateAdmin, user devopsbot is a member of two groups ClusterViewOps and NS1CreateDev and devopsbot2 is a member of NS1CreateDev. 
 

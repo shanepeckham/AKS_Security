@@ -60,13 +60,11 @@ Determining which Roles are required for operations within Kubernetes resources 
 
 ![Layered](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_7.png)
 
-This is however a simplified approach as it does not implement restrictions on resources that may be accessed. In reality a user's access is defined by three components, that of Scope e.g. Cluster or Namespace, Resources e.g. Pods, Services and Verbs, e.g. Create, Exec, List, see below:
-
-![Access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180710_8.png?v=4&s=100)
+This is however a simplified approach as it does not implement restrictions on resources that may be accessed. In reality a user's access is defined by the intersection of three components, that of Scope e.g. Cluster or Namespace, Resources e.g. Pods, Services and Verbs, e.g. Create, Exec, List.
 
 Thus a more secure approach would be to introduce layers of resource restrictions on this model. Clearly a balance needs to be found between maintenance and control, thus it may make sense to aggregate typical resources that are required to deploy solutions on Kubernetes. We do not want to create too many AAD Groups, or rather we do not want users to be members of too many AAD Groups as these are reflected in the token and can increase login times.
 
-Thus it is viable to create many AAD Groups representing Resource, Scope and Verb permissions, but care should then be taken to ensure that the user is added to the least amount of AAD Groups to enable those permissions.
+**Thus it is viable to create many AAD Groups representing Resource, Scope and Verb permissions, but care should then be taken to ensure that the user is added to the least amount of AAD Groups to enable those permissions.**
 
 ## Enable RBAC on cluster with AD integration
 
@@ -80,38 +78,6 @@ Run
 ```
 az aks get-credentials --name [clustername] --resource-group [resourcegroup] --admin
 ```
-7. You can issue the command 
-```az aks get-credentials --name devopsaksad --resource-group devopsakdsad ```
-8. When you try to run a kubectl command you will be presented with the following:
-
-```To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code [code] to authenticate```
-
-You will then be directed to an OAUTH permission request, see below:
-
-![Permissions](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180627_2.png)
-
-![Grant client AD application access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180627_3.png)
-
-If you try to run ```kubectl get nodes ``` you will receive the following message:
-
-```
-You must be logged in to the server (Unauthorized)
-```
-
-We can now grant the group to which the user belongs, namely DevOpsGroup, the permissions to read pods.
-
-
-Create the 
-
-Todo
-Create namespace read devopsbot2
-Create devopsbot + 2 with namespace create and cluster scope read for multiple
-Create service account with ad settings password longer change maybe with cluster wide read, namespace create/???
-All automated via az clie
-
-
-Create the cluster role for the to allow the granting of roles at the cluster level. Anyone added to this group will be allowed to grant roles at the same scope to others
-
 
 ### Create a new user DevopsBot
 
@@ -141,6 +107,29 @@ kubectl create -f https://raw.githubusercontent.com/shanepeckham/AKS_Security/ma
 ```
 
 ### Grant DevOpsBot cluster scoped list permissions by binding roles to the group
+
+As user devopsbot connect to AKS with kubectl
+
+```az aks get-credentials --name devopsaksad --resource-group devopsakdsad ```
+
+When you try to run a kubectl command you will be presented with the following:
+
+```To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code [code] to authenticate```
+
+You will then be directed to an OAUTH permission request, see below:
+
+![Permissions](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180627_2.png)
+
+![Grant client AD application access](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180627_3.png)
+
+If you try to run ```kubectl get nodes ``` you will receive the following message:
+
+```
+You must be logged in to the server (Unauthorized)
+```
+
+We can now grant the group to which the user belongs, namely DevOpsGroup, the permissions to read pods.
+
 ```
 az ad group member add --group K8Cluster-View --member-id [objectId]                  
 ```   
@@ -161,6 +150,13 @@ The last command should return 'yes'
 
 ![yes](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180628_4.png)
 
+However, if the user devops bot tries to issue a watch on the pods:
+
+```kubectl get pods -n devops -w```
+
+You will receive the following:
+
+```Error from server (Forbidden): unknown (get pods)```
 
 ### Grant DevOpsBot namespace scoped list permissions by binding roles to the group (for create, update, watch pods)
 
@@ -174,17 +170,21 @@ az ad group member add --group K8DevOpsEdit --member-id [objectId]
 kubectl create -f https://raw.githubusercontent.com/shanepeckham/AKS_Security/master/Sample%20Implementation/Roles%20and%20RoleBindings/New/K8ClusterView.yaml
 ```
 
-### Create a new user DevopsBot2
+## Set Up Sample Least Privileged Access RBAC
 
-As the admin of the AD Directory create a new user:
 
-```
-az ad user create --display-name devopsbot2 --password OpsBotDev2 --user-principal-name devopsbot2@[yourdomain].onmicrosoft.com --force-change-password-next-login true --immutable-id devopsbot2
-```
 
-### Add the 
+Create the 
 
-### Grant DevOpsBot2 namespace scoped list permissions
+Todo
+Create namespace read devopsbot2
+Create devopsbot + 2 with namespace create and cluster scope read for multiple
+Create service account with ad settings password longer change maybe with cluster wide read, namespace create/???
+All automated via az clie
+
+
+Create the cluster role for the to allow the granting of roles at the cluster level. Anyone added to this group will be allowed to grant roles at the same scope to others
+
 
 
 

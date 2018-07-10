@@ -79,32 +79,32 @@ Run
 az aks get-credentials --name [clustername] --resource-group [resourcegroup] --admin
 ```
 
-### Create a new user DevopsBot
+## Set Up Sample Least Privileged Access RBAC
 
-As the admin of the AD Directory create a new user:
+1. Amend and run the RBAC.sh script to include your domain in section three as your AAD administrator
 
-```
-az ad user create --display-name devopsbot --password OpsBotDev --user-principal-name devopsbot@[yourdomain].onmicrosoft.com --force-change-password-next-login true --immutable-id devopsbot
+This script will create two users:
 
-```
+* devopsbot
+* devopsbot2
 
-### Create the AD Group for cluster scoped list permissions
+And the following AD Groups:
 
-```
-az ad group create --display-name K8Cluster-View --mail-nickname K8Cluster-View
+* ClusterViewAdmin
+* ClusterViewDev
+* ClusterViewOps
+* ClusterCreateAdmin
+* ClusterCreateDev
+* ClusterCreateOps
+* NS1ViewAdmin
+* NS1ViewDev
+* NS1ViewOps
+* NS1CreateAdmin
+* NS1CreateDev
+* NS1CreateOps
 
-```
-### Get the users object id
 
-``` 
-az ad user show --upn-or-object-id devopsbot@[yourdomain].onmicrosoft.com --query objectId
-```                   
 
-### Add ClusterRoles and ClusterRoleBindings to view pods and podlogs and assign to group K8Cluster-View
-
-```
-kubectl create -f https://raw.githubusercontent.com/shanepeckham/AKS_Security/master/Sample%20Implementation/Roles%20and%20RoleBindings/New/K8ClusterView.yaml
-```
 
 ### Grant DevOpsBot cluster scoped list permissions by binding roles to the group
 
@@ -169,9 +169,6 @@ az ad group member add --group K8DevOpsEdit --member-id [objectId]
 ```
 kubectl create -f https://raw.githubusercontent.com/shanepeckham/AKS_Security/master/Sample%20Implementation/Roles%20and%20RoleBindings/New/K8ClusterView.yaml
 ```
-
-## Set Up Sample Least Privileged Access RBAC
-
 
 
 Create the 

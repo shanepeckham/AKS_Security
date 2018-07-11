@@ -153,6 +153,32 @@ and getting full administration access to the cluster.
 
 Instead, follow these steps:
 
+Clone the role relevant to your cluster users and amend the action for the provider Microsoft.ContainerService.Remov permitted action “Microsoft.ContainerService/managedClusters/accessProfiles/read” - see below:
+
+This is clearly only valid if the users do not need other Azure service access. It does mean that the user will need to be provided with a kubeconfig file to work with so they can get a new token.
+
+Run the following script:
+
+```
+az role definition create --role-definition '{
+    "Name": "Custom Container Service",
+    "Description": "Cannot read Container service credentials",
+    "Actions": [
+        "Microsoft.ContainerService/managedClusters/read"
+    ],
+    "DataActions": [
+    ],
+    "NotDataActions": [
+    ],
+    "AssignableScopes": [
+        "/subscriptions/[xxx-xxx-xxx-xxx-xxx-xxx-xxx-xxx]"
+    ]
+}'
+```
+Add the custom role to the user:
+
+
+When you try to get credentials you will see this:
 
 
 

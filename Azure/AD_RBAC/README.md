@@ -155,6 +155,8 @@ Instead, follow these steps:
 
 Clone the role relevant to your cluster users and amend the action for the provider Microsoft.ContainerService.Remov permitted action “Microsoft.ContainerService/managedClusters/accessProfiles/read” - see below:
 
+![Amend action](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180711_12.png)
+
 This is clearly only valid if the users do not need other Azure service access. It does mean that the user will need to be provided with a kubeconfig file to work with so they can get a new token.
 
 Run the following script:
@@ -177,9 +179,12 @@ az role definition create --role-definition '{
 ```
 Add the custom role to the user:
 
+![custom role](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180711_13.png)
+
 
 When you try to get credentials you will see this:
 
+![fail](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180711_14.png)
 
 
 

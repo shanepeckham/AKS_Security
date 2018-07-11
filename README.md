@@ -144,7 +144,7 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Only cluster admin can configure an admission controller
 * Failure to configure the admission controller results in other functionality not being available
 
-**DOES AKS RESTRICT ACCESS TO THE API SERVER TO THE NODE IPS ONLY?** GKE does this with the ```enable-master-authorised-networks``` flag
+**DOES AKS RESTRICT ACCESS TO THE API SERVER TO THE NODE IPS ONLY?** 
 
 **Two types of admission control**
 
@@ -157,7 +157,7 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Facilitates dynamic action responses
 * Should be within the same cluster
 
-**Available in Kubernetes 1.10 - IS THIS AVAILABLE ON AKS??? - TBD HOW CAN WE CHECK WE NEED DYNAMIC ADMISSION CONTROL WEBHOOKS** 
+**Available in Kubernetes 1.10 - 
 
 **The following are the recommended admission controllers:**
 * NamespaceLifeCycle

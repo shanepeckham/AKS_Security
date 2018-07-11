@@ -153,11 +153,11 @@ and getting full administration access to the cluster.
 
 Instead, follow these steps:
 
-Clone the role relevant to your cluster users and amend the action for the provider Microsoft.ContainerService.Remov permitted action “Microsoft.ContainerService/managedClusters/accessProfiles/read” - see below:
+Clone the role relevant to your cluster users and amend the action for the provider Microsoft.ContainerService. Remove permitted action “Microsoft.ContainerService/managedClusters/accessProfiles/read” - see below:
 
 ![Amend action](https://github.com/shanepeckham/AKS_Security/blob/master/Images/Snip20180711_14.png)
 
-This is clearly only valid if the users do not need other Azure service access. It does mean that the user will need to be provided with a kubeconfig file to work with so they can get a new token.
+It does mean that the user will need to be provided with a kubeconfig file to work with so they can get a new token.
 
 Run the following script:
 
@@ -226,14 +226,6 @@ az ad group member add --group K8DevOpsEdit --member-id [objectId]
 kubectl create -f https://raw.githubusercontent.com/shanepeckham/AKS_Security/master/Sample%20Implementation/Roles%20and%20RoleBindings/New/K8ClusterView.yaml
 ```
 
-
-Create the 
-
-Todo
-Create namespace read devopsbot2
-Create devopsbot + 2 with namespace create and cluster scope read for multiple
-Create service account with ad settings password longer change maybe with cluster wide read, namespace create/???
-All automated via az clie
 
 
 Create the cluster role for the to allow the granting of roles at the cluster level. Anyone added to this group will be allowed to grant roles at the same scope to others

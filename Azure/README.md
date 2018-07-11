@@ -29,6 +29,23 @@ Removed
     },
 ```
 
+```
+{
+    "Name": "Custom Container Service",
+    "Description": "Cannot read Container service credentials",
+    "Actions": [
+        "Microsoft.ContainerService/managedClusters/read",
+        "Microsoft.ContainerService/managedClusters/accessProfiles/read"
+    ],
+    "DataActions": [
+    ],
+    "NotDataActions": [
+    ],
+    "AssignableScopes": [
+        "/subscriptions/2ff1913a-8336-4476-8fe6-42c756b333c6resourcegroups/MC_devopsaksad_devopsaksad_eastus/providers/Microsoft.ContainerService/managedClusters/devopsaksad/accessProfiles/clusterUser/"
+    ]
+}
+```
 
 az role definition create --role-definition '{
     "Name": "Custom Container Service",

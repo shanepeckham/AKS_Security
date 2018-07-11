@@ -143,6 +143,20 @@ If you try to run ```kubectl get nodes -n devops``` you will receive the followi
 You must be logged in to the server (Unauthorized)
 ```
 
+### Remove the ability to run az aks get credentials
+
+You will need to remove this role permission from the user otherwise there is nothing stopping any developer from simply running 
+```
+az aks get-credentials --name [cluster] -resource-group [group] --admin
+```
+and getting full administration access to the cluster.
+
+Instead, follow these steps:
+
+
+
+
+
 **Now run the script RBACConfig1.sh
 
 Now if user devopsbot issues the following command, it should be successful:

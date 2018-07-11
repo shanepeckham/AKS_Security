@@ -76,7 +76,7 @@ RUN /microscanner <TOKEN> [--continue-on-failure]
 
 ### PodSecurityPolicies are only available if admission controllers have been implemented - dynamic admission controllers and initialisers (alpha) are available in 1.10 - 
 
-**PodSecurityPolicy can: (NEED RECIPES)**
+**PodSecurityPolicy can:**
 
 * Avoid privilged containers from being run
 * Avoid containers that use the root namespaces from being run
@@ -143,8 +143,7 @@ https://sysdig.com/blog/kubernetes-security-psp-network-policy/
 * Occurrs after authentication
 * Only cluster admin can configure an admission controller
 * Failure to configure the admission controller results in other functionality not being available
-
-**DOES AKS RESTRICT ACCESS TO THE API SERVER TO THE NODE IPS ONLY?** 
+ 
 
 **Two types of admission control**
 

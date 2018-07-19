@@ -2,7 +2,7 @@
 
 # Deploying secure solutions on Azure Kubernetes Service
 
-Most Kubernetes security breaches are due to humar error, deploying with defaults, and not locking down components
+Most Kubernetes security breaches are due to humar error, deploying with defaults, and not locking down components.
 
 ## Key risks of an insecure Kubernetes cluster
 
@@ -36,6 +36,8 @@ Most Kubernetes security breaches are due to humar error, deploying with default
 * A user should not be able to override Kubernetes security by crafting a YAML file if layered security controls have been successfully implemented
 * Create administrative boundaries between resources
 * Store secrets centrally, preferably in a secure valault such as Azure Key Vault
+
+The following Kubernetes blog also contains a wealth of information: !(11 Ways (Not) to Get Hacked)[https://kubernetes.io/blog/#2-enable-rbac-with-least-privilege-disable-abac-and-monitor-logs]
 
 ## Container Level 
 

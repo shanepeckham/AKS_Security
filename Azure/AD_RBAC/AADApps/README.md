@@ -21,7 +21,8 @@ For more info on the OAuth2 Permission Granting in AAD, see the legendary [Vitto
 1) az login in a terminal window and ensure your correct subscription is active via ```az account set ...```
 2) Edit and Execute the bash script CreateSP.sh set the following:
 
-```** SUBSCRIPTION_ID and PASSWORD
+```
+** SUBSCRIPTION_ID and PASSWORD
 ```
 
 3) Run pip install -r requirements.txt

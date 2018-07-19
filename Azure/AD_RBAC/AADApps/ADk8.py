@@ -9,8 +9,6 @@
 
 # Ensure you have pressed Grant Permissions in the portal for the SP created in CreateSP.sh
 
-#Enter SERVER_ID below
-
 import json
 import requests
 
@@ -25,8 +23,6 @@ CLIENT_APP_NAME='' # Must be populated manually - The name of your AAD native ap
 
 CLIENT_APP_ID='' # Populated automatically
 CIENT_APP_SPN='' # Populated automatically
-
-
 
 TOKEN=''
 

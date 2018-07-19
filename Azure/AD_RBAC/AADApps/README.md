@@ -5,7 +5,8 @@ AKS and AD integration cluster. See (Integrate Azure Active Directory with AKS)[
 for more info.
 
 ## The scripts here will:
-* Create a Server App with Service Principal that can read user profile in AAD
+
+* Create a Server App with Service Principal that can read user profile in AAD. The roles are defined in the serviceManifest.json file
 * Log on via the Server App and create a native app that will alloe kubectl users to authenticate in AAD
 * Grant Oauth2 permissions or admin consent to the native app
 

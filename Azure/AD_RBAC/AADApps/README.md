@@ -4,13 +4,17 @@ The following scripts will automate the creation of the relevant Service Princip
 AKS and AD integration cluster. See (Integrate Azure Active Directory with AKS)[https://docs.microsoft.com/en-us/azure/aks/aad-integration]
 for more info.
 
+**You will need to have an admin role within your AAD tenant**
+
+Note, you cannot programmatically grant admin consent to a Service Principal unless you are using Service Principal that already has had admin consent granted to it by a human being via the Grant Permissions button the Azure Portal. If you already have such a Service Principal, feel free to use that instead and skip the CreateSP.sh step. It must have the roles defined with the serviceManifest.json file.
+
+For more info on the OAuth2 Permission Granting in AAD, see the legendary !(Vittorio Bertocci's Azure Active Directory Application Model book free chapter)[https://www.microsoftpressstore.com/articles/article.aspx?p=2473127&seqNum=2]
+
 ## The scripts here will:
 
 * Create a Server App with Service Principal that can read user profile in AAD. The roles are defined in the serviceManifest.json file
 * Log on via the Server App and create a native app that will allow kubectl users to authenticate in AAD
 * Grant Oauth2 permissions or admin consent to the native app
-
-**You will need to have an admin role within your AAD tenant**
 
 ## To run:
 

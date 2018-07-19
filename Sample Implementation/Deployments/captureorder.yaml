@@ -33,7 +33,7 @@ spec:
         - name: "EVENTPOLICYNAME"
           value: "RootManageSharedAccessKey"
         - name: "EVENTPOLICYKEY"
-          value: "2dXz/klqlCd2YLEaUp1D91p2q1bgaW9F/ZJSt39yT3I="
+          value: "2dXz//ZJSt39yT3I="
         - name: "TEAMNAME"
           value: "Tester"
         - name: http

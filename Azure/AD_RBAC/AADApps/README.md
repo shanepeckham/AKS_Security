@@ -20,7 +20,7 @@ for more info.
 ```** SUBSCRIPTION_ID and PASSWORD
 ```
 
-3) Run pip install -r requirements.tx
+3) Run pip install -r requirements.txt
 4) Edit ADK8.py and set the following:
 ```
 SERVER_APP_NAME='' # Must be populated manually - The name of your Server App

@@ -27,7 +27,7 @@ spec:
             fieldRef:
               fieldPath: status.podIP
         - name:  "MONGOHOST"
-          value: "mongodb://k8orders:QyzzuAhEuCybiGDxI1o0ai4myLE3No3cBQS15n72xBEXIGNBbNnCztmRLLz2FnNSPtJdQzUzumuqwdFY7FKr2w==@k8orders.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
+          value: "mongodb://:==@k8orders.documents.azure.com:10255/?ssl=true&replicaSet=globaldb"
         - name: "EVENTURL"
           value: "https://coffee.servicebus.windows.net/orders"
         - name: "EVENTPOLICYNAME"

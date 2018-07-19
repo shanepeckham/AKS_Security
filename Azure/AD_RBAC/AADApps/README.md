@@ -35,6 +35,7 @@ SERVER_SECRET='' # Must be populated manually - The password or ClientSecret of 
 TENANT_ID='' # Must be populated manually - Your AD tenant id
 CLIENT_APP_NAME='' # Must be populated manually - The name of your AAD native app
 ```
+Ensure the Start and Expiry times in function grantOAuth2Permissions() are relevant to your policies.
 
 5) Run the python script ADk8.py. 
 

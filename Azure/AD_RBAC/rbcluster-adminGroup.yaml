@@ -1,0 +1,20 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+  creationTimestamp: 2018-06-27T14:17:30Z
+  labels:
+    kubernetes.io/bootstrapping: rbac-defaults
+  name: cluster-admin
+  resourceVersion: "83"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/cluster-admin
+  uid: d3ca0388-7a14-11e8-a8f2-cadf669e8042
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: Group
+  name: "ClusterCreateAdmin" # Name is case sensitive
+  apiGroup: rbac.authorization.k8s.io

@@ -7,7 +7,6 @@ rules:
 - apiGroups: ["", "apps", "extensions"]
   resources: ["pods, podlogs"]
   verbs: ["get", "watch", "list"]
-  nonResourceURLs: ["*"]
 - apiGroups: [""]
   resources: ["services", "endpoints"]
   verbs: ["get", "list", "watch"]

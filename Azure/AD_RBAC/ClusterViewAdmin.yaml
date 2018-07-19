@@ -6,7 +6,6 @@ rules:
 - apiGroups: ["*"]
   resources: ["*"]
   verbs: ["get", "list", "watch"]
-  nonResourceURLs: ["*"]
 ---
 # This role binding allows members in group DevOpsGroup to pod-list-podlogs-list in the "devops" namespace.
 kind: ClusterRoleBinding

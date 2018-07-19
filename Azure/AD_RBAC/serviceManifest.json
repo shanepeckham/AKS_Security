@@ -1,0 +1,52 @@
+[
+    {
+        "resourceAppId": "00000003-0000-0000-c000-000000000000",
+        "resourceAccess": [
+            {
+                "id": "e1fe6dd8-ba31-4d61-89e7-88639da4683d",
+                "type": "Scope"
+            },
+            {
+                "id": "c5366453-9fb0-48a5-a156-24f0c49a4b84",
+                "type": "Scope"
+            },
+            {
+                "id": "19dbc75e-c2e2-444c-a770-ec69d8559fc7",
+                "type": "Role"
+            },
+            {
+                "id": "4e46008b-f24c-477d-8fff-7bb4ec7aafe0",
+                "type": "Scope"
+            },
+            {
+                "id": "1bfefb4e-e0b5-418b-a88f-73c46d2cc8e9",
+                "type": "Role"
+            }
+        ]
+    },
+    {
+        "resourceAppId": "00000002-0000-0000-c000-000000000000",
+        "resourceAccess": [
+            {
+                "id": "311a71cc-e848-46a1-bdf8-97ff7156d8e6",
+                "type": "Scope"
+            },
+            {
+                "id": "1cda74f2-2616-4834-b122-5cb1b07f8a59",
+                "type": "Role"
+            },
+            {
+                "id": "78c8a3c8-a07e-4b9e-af1b-b5ccab50a175",
+                "type": "Scope"
+            },
+            {
+                "id": "78c8a3c8-a07e-4b9e-af1b-b5ccab50a175",
+                "type": "Role"
+            },
+            {
+                "id": "824c81eb-e3f8-4ee6-8f6d-de7f50d565b7",
+                "type": "Role"
+            }
+        ]
+    }
+]

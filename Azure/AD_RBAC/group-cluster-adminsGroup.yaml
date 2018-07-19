@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: 2018-06-27T14:26:31Z
+  name: group-cluster-admins
+  resourceVersion: "1361"
+  selfLink: /apis/rbac.authorization.k8s.io/v1/clusterrolebindings/group-cluster-admins
+  uid: 15f0cf2b-7a16-11e8-a8f2-cadf669e8042
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: "ClusterCreateAdmin"

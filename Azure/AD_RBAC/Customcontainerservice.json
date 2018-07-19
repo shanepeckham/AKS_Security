@@ -1,0 +1,226 @@
+{
+  "displayName": "Custom Microsoft Container Service",
+  "id": "/providers/Microsoft.Authorization/providerOperations/Microsoft.ContainerService",
+  "name": "Microsoft.ContainerService",
+  "operations": [],
+  "resourceTypes": [
+    {
+      "displayName": "Managed Clusters",
+      "name": "managedClusters",
+      "operations": [
+        {
+          "description": "Get a managed cluster",
+          "displayName": "Get Managed Cluster",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/managedClusters/read",
+          "origin": "user,system",
+          "properties": null
+        },
+        {
+          "description": "Creates a new managed cluster or updates an existing one",
+          "displayName": "Create or Update Managed Cluster",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/managedClusters/write",
+          "origin": "user,system",
+          "properties": null
+        },
+        {
+          "description": "Deletes a managed cluster",
+          "displayName": "Delete Managed Cluster",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/managedClusters/delete",
+          "origin": "user,system",
+          "properties": null
+        }
+      ]
+    },
+    {
+      "displayName": "The metric definition of Managed Cluster",
+      "name": "managedClusters/providers/Microsoft.Insights/metricDefinitions",
+      "operations": [
+        {
+          "description": "Gets the available metrics for Managed Cluster",
+          "displayName": "Read Managed Cluster metric definitions",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/managedClusters/providers/Microsoft.Insights/metricDefinitions/read",
+          "origin": "system",
+          "properties": {
+            "serviceSpecification": {
+              "metricSpecifications": [
+                {
+                  "aggregationType": "Total",
+                  "displayDescription": "Total number of available cpu cores in a managed cluster",
+                  "displayName": "Total number of available cpu cores in a managed cluster",
+                  "name": "kube_node_status_allocatable_cpu_cores",
+                  "unit": "Count"
+                },
+                {
+                  "aggregationType": "Total",
+                  "displayDescription": "Total amount of available memory in a managed cluster",
+                  "displayName": "Total amount of available memory in a managed cluster",
+                  "name": "kube_node_status_allocatable_memory_bytes",
+                  "unit": "Bytes"
+                },
+                {
+                  "aggregationType": "Total",
+                  "dimensions": [
+                    {
+                      "displayName": "Namespace of the pod",
+                      "name": "namespace"
+                    },
+                    {
+                      "displayName": "Name of the pod",
+                      "name": "pod"
+                    }
+                  ],
+                  "displayDescription": "Number of pods in Ready state",
+                  "displayName": "Number of pods in Ready state",
+                  "name": "kube_pod_status_ready",
+                  "unit": "Count"
+                },
+                {
+                  "aggregationType": "Total",
+                  "dimensions": [
+                    {
+                      "displayName": "Condition type represented in this metric",
+                      "name": "condition"
+                    },
+                    {
+                      "displayName": "Status of the condition dimension (true/false)",
+                      "name": "status"
+                    },
+                    {
+                      "displayName": "Status of the condition dimension (Ready/NotReady)",
+                      "name": "status2"
+                    },
+                    {
+                      "displayName": "Node's name",
+                      "name": "node"
+                    }
+                  ],
+                  "displayDescription": "Statuses for various node conditions",
+                  "displayName": "Statuses for various node conditions",
+                  "name": "kube_node_status_condition",
+                  "unit": "Count"
+                },
+                {
+                  "aggregationType": "Total",
+                  "dimensions": [
+                    {
+                      "displayName": "Phase of the pod",
+                      "name": "phase"
+                    },
+                    {
+                      "displayName": "Namespace of the pod",
+                      "name": "namespace"
+                    },
+                    {
+                      "displayName": "Name of the pod",
+                      "name": "pod"
+                    }
+                  ],
+                  "displayDescription": "Number of pods by phase",
+                  "displayName": "Number of pods by phase",
+                  "name": "kube_pod_status_phase",
+                  "unit": "Count"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "displayName": "Managed Clusters",
+      "name": "managedClusters/providers/Microsoft.Insights/diagnosticSettings",
+      "operations": [
+        {
+          "description": "Get the diagnostic setting for a managed cluster resource",
+          "displayName": "Read Diagnostic Setting",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/managedClusters/providers/Microsoft.Insights/diagnosticSettings/read",
+          "origin": "system",
+          "properties": null
+        },
+        {
+          "description": "Creates or updates the diagnostic setting for a managed cluster resource",
+          "displayName": "Write Diagnostic Setting",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/managedClusters/providers/Microsoft.Insights/diagnosticSettings/write",
+          "origin": "system",
+          "properties": null
+        }
+      ]
+    },
+    {
+      "displayName": "The log definition of Managed Cluster",
+      "name": "managedClusters/providers/Microsoft.Insights/logDefinitions",
+      "operations": [
+        {
+          "description": "Gets the available logs for Managed Cluster",
+          "displayName": "Read Managed Cluster log definitions",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/managedClusters/providers/Microsoft.Insights/logDefinitions/read",
+          "origin": "system",
+          "properties": {
+            "serviceSpecification": {
+              "logSpecifications": [
+                {
+                  "blobDuration": "PT1H",
+                  "displayName": "Kubernetes API Server",
+                  "name": "kube-apiserver"
+                },
+                {
+                  "blobDuration": "PT1H",
+                  "displayName": "Kubernetes Controller Manager",
+                  "name": "kube-controller-manager"
+                },
+                {
+                  "blobDuration": "PT1H",
+                  "displayName": "Kubernetes Scheduler",
+                  "name": "kube-scheduler"
+                },
+                {
+                  "blobDuration": "PT1H",
+                  "displayName": "Authentication Webhook",
+                  "name": "guard"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "displayName": "Container Services",
+      "name": "containerServices",
+      "operations": [
+        {
+          "description": "Get a container service",
+          "displayName": "Get Container Service",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/containerServices/read",
+          "origin": "user,system",
+          "properties": null
+        },
+        {
+          "description": "Creates a new container service or updates an existing one",
+          "displayName": "Create or Update Container Service",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/containerServices/write",
+          "origin": "user,system",
+          "properties": null
+        },
+        {
+          "description": "Deletes a container service",
+          "displayName": "Delete Container Service",
+          "isDataAction": false,
+          "name": "Microsoft.ContainerService/containerServices/delete",
+          "origin": "user,system",
+          "properties": null
+        }
+      ]
+    }
+  ],
+  "type": "Microsoft.Authorization/providerOperations"
+}

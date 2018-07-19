@@ -1,7 +1,7 @@
 # Creating AAD apps for RBAC AD integration with Kubernetes
 
 The following scripts will automate the creation of the relevant Service Principals, AAD apps and OAuth2 permissions required to provision an
-AKS and AD integration cluster. See (Integrate Azure Active Directory with AKS)[https://docs.microsoft.com/en-us/azure/aks/aad-integration]
+AKS and AD integration cluster. See ![Integrate Azure Active Directory with AKS](https://docs.microsoft.com/en-us/azure/aks/aad-integration)
 for more info.
 
 **You will need to have an admin role within your AAD tenant**

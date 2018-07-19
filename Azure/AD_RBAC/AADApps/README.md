@@ -10,7 +10,7 @@ for more info.
 * Log on via the Server App and create a native app that will allow kubectl users to authenticate in AAD
 * Grant Oauth2 permissions or admin consent to the native app
 
-**You will need to have an admin role with your AAD tenant**
+**You will need to have an admin role within your AAD tenant**
 
 ## To run:
 

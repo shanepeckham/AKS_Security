@@ -37,7 +37,7 @@ Most Kubernetes security breaches are due to humar error, deploying with default
 * Create administrative boundaries between resources
 * Store secrets centrally, preferably in a secure valault such as Azure Key Vault
 
-The following Kubernetes blog also contains a wealth of information: !(11 Ways (Not) to Get Hacked)[https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/]
+The following Kubernetes blog also contains a wealth of information: [11 Ways (Not) to Get Hacked](https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/)
 
 ## Container Level 
 

@@ -22,7 +22,7 @@ TENANT_ID='' # Must be populated manually - Your AD tenant id
 CLIENT_APP_NAME='' # Must be populated manually - The name of your AAD native app
 
 CLIENT_APP_ID='' # Populated automatically
-CIENT_APP_SPN='' # Populated automatically
+CLIENT_APP_SPN='' # Populated automatically
 
 TOKEN=''
 
@@ -191,7 +191,7 @@ def grantOAuth2Permissions():
 
         payload = {
         "odata.type": "Microsoft.DirectoryServices.OAuth2PermissionGrant",
-        "clientId": CIENT_APP_SPN,
+        "clientId": CLIENT_APP_SPN,
         "consentType": "AllPrincipals",
         #"principalId": "",
         "resourceId": spn,
@@ -247,7 +247,7 @@ SERVER_OAUTH_ID = getServerOAuthID(SERVER_APP_ID)
 CLIENT_APP_ID = createApp('true', CLIENT_APP_NAME)
 
 # Now we need to create a Service Principal for the native app
-CIENT_APP_SPN = createSPN(CLIENT_APP_ID)
+CLIENT_APP_SPN = createSPN(CLIENT_APP_ID)
 
 # Now we need to get the Service Principal ObjectIds so that we can grant OAuth2 permissions
 grantOAuth2Permissions()

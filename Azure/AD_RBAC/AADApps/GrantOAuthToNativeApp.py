@@ -15,7 +15,7 @@ CLIENT_APP_SPN='' # Populated automatically
 # Let's go and get a token
 TOKEN = 'Bearer ' + getToken()
 
-# Now we need to create a Service Principal for the native app
+# Now we need to get the Service Principal for the native app
 CLIENT_APP_SPN = getSPN(CLIENT_APP_ID)
 
 # Now we need to get the Service Principal ObjectIds so that we can grant OAuth2 permissions

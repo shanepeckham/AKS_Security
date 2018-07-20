@@ -10,6 +10,9 @@ Note, you cannot programmatically grant admin consent to a Service Principal unl
 
 For more info on the OAuth2 Permission Granting in AAD, see the legendary [Vittorio Bertocci's Azure Active Directory Application Model book free chapter](https://www.microsoftpressstore.com/articles/article.aspx?p=2473127&seqNum=2)
 
+**If you have a server and native app already and just need to grant consent, run the script GrantOAuthToNativeApp.py**
+**If you need to create new apps, run CreateSP.sh and ADk8.py as described below.**
+
 ## The scripts here will:
 
 * Create a Server App with Service Principal that can read user profile in AAD. The roles are defined in the serviceManifest.json file

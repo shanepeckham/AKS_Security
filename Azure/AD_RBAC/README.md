@@ -76,7 +76,7 @@ It is of course feasible to only bind cluster scoped roles to AAD Groups to real
 
 ## Enable RBAC on cluster with AD integration
 
-Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure/aks/aad-integration)
+Follow initial setup as documented [here](https://docs.microsoft.com/en-us/azure/aks/aad-integration) or for an automated setup look at the [Apps Script](https://github.com/shanepeckham/AKS_Security/blob/master/Azure/AD_RBAC/AADApps/README.md)
 
 ## Apply RBAC to Azure AD users and groups
 
